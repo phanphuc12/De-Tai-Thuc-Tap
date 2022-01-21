@@ -1,0 +1,22 @@
+<?xml version ="1.0" encoding ="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="mail.menu_root_discuss" model="ir.ui.menu">
+            <field name="sequence" eval="1"/>
+        </record>
+        <menuitem id="menu_view" name="Assignment System " sequence="10"/>
+
+        <menuitem id="action_menu_view"
+                  name="Employee"
+                  action="action_menu"
+                  parent="menu_view"
+                  sequence="10"/>
+
+        <menuitem id="employee_view_action"
+                  name="Add Employee"
+                  action="action_hr_employee"
+                  parent="action_menu_view"
+                  sequence="10"/>
+
+    </data>
+</odoo>
