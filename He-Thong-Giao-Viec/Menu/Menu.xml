@@ -11,12 +11,23 @@
                   action="action_menu"
                   parent="menu_view"
                   sequence="10"/>
-
-        <menuitem id="employee_view_action"
+        <!--employee-->
+        <menuitem id="employee_view_menu"
                   name="Add Employee"
                   action="action_hr_employee"
                   parent="action_menu_view"
                   sequence="10"/>
+        <!--department-->
+        <menuitem id="department_view_menu"
+                  name="Department"
+                  action="action_hr_department"
+                  parent="action_menu_view"
+                  sequence="11"/>
 
+        <menuitem id="assignment_view_menu"
+                  name="Assignment"
+                  action="action_assignment_s"
+                  parent="menu_view"
+                  sequence="10"/>
     </data>
 </odoo>
