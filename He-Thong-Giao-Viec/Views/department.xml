@@ -6,8 +6,8 @@
             <field name="model">hr.department</field>
             <field name="inherit_id" ref="hr.view_department_form"/>
             <field name="arch" type="xml">
-                <field name="parent_id" position="after">
-                    <field name="test"/>
+                <field name="manager_id" position="after">
+                    <field name="members" widget = "many2many_tags"/>
                 </field>
             </field>
         </record>
