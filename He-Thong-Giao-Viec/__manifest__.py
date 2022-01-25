@@ -10,7 +10,11 @@
         'hr'
     ],
     'data': [
-        'Views/NhanVien.xml',
+        'Security/ir.model.access.csv',
+        'Data/sequence.xml',
+        'Views/employees.xml',
+        'Views/department.xml',
+        'Views/assignment.xml',
         'Menu/Menu.xml'
     ],
     'demo': [],
