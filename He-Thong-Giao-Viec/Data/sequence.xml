@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="seq_assignment" model="ir.sequence">
+            <field name="name">Assignment Sequence</field>
+            <field name="code">assignment.s.sequence</field>
+            <field name="prefix">ASM</field>
+            <field name="padding">4</field>
+        </record>
+
+    </data>
+</odoo>
