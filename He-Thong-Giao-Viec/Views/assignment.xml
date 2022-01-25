@@ -14,8 +14,12 @@
                         </div>
                         <group name="inf">
                             <group>
-                                <field name="name"/>
-                                <field name="age"/>
+                                <field name="department"/>
+                                <field name="employee"/>
+                            </group>
+                            <group>
+                                <field name="description"/>
+                                <field name="deadline"/>
                             </group>
                         </group>
                     </sheet>
@@ -28,9 +32,9 @@
             <field name="model">assignment.s</field>
             <field name="arch" type="xml">
                 <tree string="tree_assignment" default_order="create_date desc">
-                    <field name="name"/>
                     <field name="name_seq"/>
-                    <field name="age"/>
+                    <field name="employee"/>
+                    <field name="deadline"/>
                 </tree>
             </field>
         </record>
