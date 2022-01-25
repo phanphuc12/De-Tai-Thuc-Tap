@@ -6,4 +6,4 @@ class Department(models.Model):
     _description = 'Department'
     _inherit = 'hr.department'
 
-    test = fields.Text(string="test1")
+    members = fields.Many2many('hr.employee', string="Member", required=True)
