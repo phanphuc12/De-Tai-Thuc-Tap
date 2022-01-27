@@ -3,3 +3,5 @@ access_hr_employee,access.hr.employee,He-Thong-Giao-Viec.model_hr_employee,He-Th
 access_hr_department,access.hr.department,model_hr_department,,1,1,1,1
 access_assignment_s,access.assignment.s,model_assignment_s,,1,1,1,1
 access_hr_family,access.hr.family,model_hr_family,,1,1,1,1
+access_my_assignment,access.my.assignment,model_my_assignment,,1,1,1,1
+access_send_assignment,access.send.assignment,model_send_assignment,,1,1,1,1
