@@ -7,7 +7,6 @@ class assignment(models.Model):
 
     department = fields.Many2one('hr.department', string="Department", required=True)
     employee = fields.Many2one('hr.employee', string='Employee', required=True)
-    description = fields.Text(string='Description', required=False)
     deadline = fields.Datetime(string='Deadline', required=True)
     name_seq = fields.Char(string='ID', required=True, copy=False, readonly=True, index=True,
                            default=lambda self: _('New'))
