@@ -13,7 +13,7 @@ class family(models.Model):
 
     name = fields.Text("Full Name")
     day_of_birth = fields.Date("Date Of Birth")
-    nationality = fields.Many2one('res.country', string='Lationality')
+    nationality = fields.Many2one('res.country', string='Nationality')
     ethnic_group = fields.Char("Ethnic Group")
     permanent_address = fields.Text("Permanent Address")
     family_id = fields.Many2one('hr.employee')
