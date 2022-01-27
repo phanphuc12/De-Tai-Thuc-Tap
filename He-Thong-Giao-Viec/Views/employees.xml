@@ -6,8 +6,19 @@
             <field name="model">hr.employee</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//group[@name= 'active_group']/field[@name= 'user_id']" position="replace">
+                    <field name="user_id" string="Related User" domain="[('share', '=', False)]"
+                           groups='He-Thong-Giao-Viec.group_assignment_employee_manager'/>
+                </xpath>
+                <xpath expr="//group[@name='identification_group']" position="replace">
+                    <field name="pin" string="PIN Code"/>
+                    <label for="barcode"/>
+                    <div class="o_row">
+                        <field name="barcode"/>
+                    </div>
+                </xpath>
                 <xpath expr="//page[@name = 'hr_settings']" position="after">
-                    <page name="Family" string = "Family">
+                    <page name="Family" string="Family">
                         <field name="family_lines">
                             <tree editable="bottom">
                                 <field name="name"/>
