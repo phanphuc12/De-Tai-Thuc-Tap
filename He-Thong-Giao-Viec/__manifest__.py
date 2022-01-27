@@ -15,10 +15,13 @@
         'security/ir.model.access.csv',
         # Data
         'Data/sequence.xml',
+        # Wizards
+        'Wizards/send_assignment.xml',
         # Views
         'Views/employees.xml',
         'Views/department.xml',
         'Views/assignment.xml',
+        'Views/my_assignment.xml',
         # Menu
         'Menu/Menu.xml'
     ],
