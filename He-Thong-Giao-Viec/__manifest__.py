@@ -10,11 +10,16 @@
         'hr'
     ],
     'data': [
-        'Security/ir.model.access.csv',
+        # Security
+        'security/security.xml',
+        'security/ir.model.access.csv',
+        # Data
         'Data/sequence.xml',
+        # Views
         'Views/employees.xml',
         'Views/department.xml',
         'Views/assignment.xml',
+        # Menu
         'Menu/Menu.xml'
     ],
     'demo': [],
