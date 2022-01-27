@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_hr_employee,access.hr.employee,model_hr_employee,,1,1,1,1
-access_assignment_s, access.assignment.s,model_assignment_s,,1,1,1,1
+access_hr_employee,access.hr.employee,He-Thong-Giao-Viec.model_hr_employee,He-Thong-Giao-Viec.group_assignment_employee,1,1,1,1
+access_hr_department,access.hr.department,model_hr_department,,1,1,1,1
+access_assignment_s,access.assignment.s,model_assignment_s,,1,1,1,1
+access_hr_family,access.hr.family,model_hr_family,,1,1,1,1
