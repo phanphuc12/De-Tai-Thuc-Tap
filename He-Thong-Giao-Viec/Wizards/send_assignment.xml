@@ -4,7 +4,7 @@
         <field name="name">send.assignment.wizard</field>
         <field name="model">send.assignment</field>
         <field name="arch" type="xml">
-            <form string ="Send Asignment">
+            <form string ="Send Assignment">
                 <group>
                     <field name="description"/>
                 </group>
