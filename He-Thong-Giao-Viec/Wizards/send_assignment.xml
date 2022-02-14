@@ -6,7 +6,12 @@
         <field name="arch" type="xml">
             <form string ="Send Assignment">
                 <group>
-                    <field name="description"/>
+                    <field name="description" invisible="1" />
+                    <field name="name_seq" invisible="1" />
+                    <field name="employee" invisible="1" />
+                    <field name="deadline" invisible="1" />
+                    <field name="department" invisible="1" />
+
                 </group>
                 <footer>
                     <button name="send_assignment" string="Send" type="object" class="btn-primary"/>
