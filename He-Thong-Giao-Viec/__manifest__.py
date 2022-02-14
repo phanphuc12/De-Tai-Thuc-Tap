@@ -15,8 +15,8 @@
         'security/ir.model.access.csv',
         # Data
         'Data/sequence.xml',
-        # Wizards
-        'Wizards/send_assignment.xml',
+        # # Wizards
+        # 'Wizards/send_assignment.xml',
         # Views
         'Views/employees.xml',
         'Views/department.xml',
