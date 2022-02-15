@@ -3,6 +3,7 @@ from odoo import fields, models, api, _
 
 class MyAssignment(models.Model):
     _name = "my.assignment"
+    _inherit = ["mail.thread"]
     _description = "My Assignment"
 
     department = fields.Many2one('hr.department', string="Department", required=True)
@@ -15,7 +16,7 @@ class MyAssignment(models.Model):
         [('received', 'Received'),
          ('complete', 'Completed'),
          ('confirm', 'Confirmed')
-         ], string='Status', default='received', readonly=True)
+         ], string='Status', default='received', readonly=True, tracking=True)
 
     def action_complete(self):
         for rec in self:
@@ -23,11 +24,4 @@ class MyAssignment(models.Model):
             ma = self.env['assignment.s'].search([('name_seq', '=', rec.name_seq)])
             if ma.name_seq:
                 ma.state = "complete"
-                # print('check...', ma.state)
-
-    # @api.onchange('state')
-    # def state_complete(self):
-    #     for rec in self:
-    #         ma = self.env['assignment.s'].search([('name_seq', '=', rec.name_seq)])
-    #         if ma:
-    #             print("test...", ma.name_seq)
+                print('check...', ma.state)
