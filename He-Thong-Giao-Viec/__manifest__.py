@@ -7,7 +7,8 @@
     'category': 'Human Resources',
     'license': 'LGPL-3',
     'depends': [
-        'hr'
+        'hr',
+        'mail'
     ],
     'data': [
         # Security
