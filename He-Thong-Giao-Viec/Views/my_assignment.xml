@@ -6,6 +6,11 @@
             <field name="model">my.assignment</field>
             <field name="arch" type="xml">
                 <form string="My Assignment">
+                    <header>
+                        <button name="action_complete" type="object" string="Complete" class="btn-primary"
+                                states="received" attrs="{'invisible': [('state','=', 'confirm')]}"/>/>
+                        <field name="state" widget="statusbar" statusbar_visible="received,complete,confirm"/>
+                    </header>
                     <sheet>
                         <div class="oe_title">
                             <h1>
