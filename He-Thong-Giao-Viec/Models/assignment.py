@@ -6,7 +6,7 @@ class assignment(models.Model):
     _inherit = ["mail.thread"]
 
     department = fields.Many2one('hr.department', string="Department", required=True)
-    employee = fields.Many2one('hr.employee', string='Employee', required=True)
+    employee = fields.Many2one('res.users', string='Employee', required=True)
     deadline = fields.Datetime(string='Deadline', required=True)
     description = fields.Text(string='Description')
     name_seq = fields.Char(string='ID', required=True, copy=False, readonly=True, index=True,
@@ -16,12 +16,9 @@ class assignment(models.Model):
          ('send', 'Sent'),
          ('complete', 'Completed'),
          ('confirm', 'Confirmed')
-         ], string='Status', default='draft', readonly=True
+         ], string='Status', default='draft', readonly=True, tracking=True
     )
-
-    # def action_complete(self):
-    #     for rec in self:
-    #         rec.state = 'complete'
+    current_user = fields.Many2one('res.users', 'Current User', default=lambda self: self.env.user)
 
     def send_assignment(self):
         vals = {
@@ -34,6 +31,7 @@ class assignment(models.Model):
         }
         for rec in self:
             rec.state = 'send'
+            print('print:....', rec.current_user)
         self.env['my.assignment'].create(vals)
 
     def action_confirm(self):
@@ -53,4 +51,5 @@ class assignment(models.Model):
     @api.onchange('department')
     def related_department(self):
         for rec in self:
+            print('print:....', rec.current_user)
             return {'domain': {'employee': [('department_id', '=', rec.department.id)]}}
