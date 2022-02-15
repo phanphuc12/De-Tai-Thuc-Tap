@@ -11,13 +11,37 @@ class assignment(models.Model):
     description = fields.Text(string='Description')
     name_seq = fields.Char(string='ID', required=True, copy=False, readonly=True, index=True,
                            default=lambda self: _('New'))
-    status = fields.Selection(
+    state = fields.Selection(
         [('draft', 'Draft'),
-         ('send', 'Send'),
-         ('completed', 'Completed'),
-         ('confirmed', 'Confirmed')
+         ('send', 'Sent'),
+         ('complete', 'Completed'),
+         ('confirm', 'Confirmed')
          ], string='Status', default='draft', readonly=True
     )
+
+    # def action_complete(self):
+    #     for rec in self:
+    #         rec.state = 'complete'
+
+    def send_assignment(self):
+        vals = {
+            'description': self.description,
+            'department': self.department.id,
+            'employee': self.employee.id,
+            'name_seq': self.name_seq,
+            'deadline': self.deadline,
+
+        }
+        for rec in self:
+            rec.state = 'send'
+        self.env['my.assignment'].create(vals)
+
+    def action_confirm(self):
+        for rec in self:
+            rec.state = 'confirm'
+            ma = self.env['my.assignment'].search([('name_seq', '=', rec.name_seq)])
+            if ma.name_seq:
+                ma.state = "confirm"
 
     @api.model
     def create(self, vals):
@@ -30,14 +54,3 @@ class assignment(models.Model):
     def related_department(self):
         for rec in self:
             return {'domain': {'employee': [('department_id', '=', rec.department.id)]}}
-
-    def send_assignment(self):
-        vals = {
-            'description': self.description,
-            'department': self.department.id,
-            'employee': self.employee.id,
-            'name_seq': self.name_seq,
-            'deadline': self.deadline,
-
-        }
-        self.env['my.assignment'].create(vals)
