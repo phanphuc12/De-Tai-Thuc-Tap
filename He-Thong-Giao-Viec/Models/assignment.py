@@ -5,7 +5,7 @@ class assignment(models.Model):
     _name = "assignment.s"
     _inherit = ["mail.thread"]
 
-    name = fields.Char('ID')
+    name = fields.Char("name")
     department = fields.Many2one('hr.department', string="Department", required=True)
     employee = fields.Many2one('res.users', string='Employee', required=True)
     deadline = fields.Datetime(string='Deadline', required=True)
@@ -19,7 +19,7 @@ class assignment(models.Model):
          ('confirm', 'Confirmed')
          ], string='Status', default='draft', readonly=True, tracking=True
     )
-    current_user = fields.Many2one('res.users', 'Current User', default=lambda self: self.env.user)
+    current_user = fields.Many2one('res.users', 'Current User', default=lambda self: self.env.user, readony=True)
 
     def send_assignment(self):
         vals = {
@@ -42,11 +42,6 @@ class assignment(models.Model):
             ma = self.env['my.assignment'].search([('name_seq', '=', rec.name_seq)])
             if ma.name_seq:
                 ma.state = "confirm"
-
-    @api.model
-    def set_name_model(self):
-        for rec in self:
-            rec.name = rec.name_seq
 
     @api.model
     def create(self, vals):
