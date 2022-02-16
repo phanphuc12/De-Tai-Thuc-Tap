@@ -69,15 +69,4 @@
         <field name="groups" eval="[(4, ref('group_assignment_employee'))]"/>
     </record>
 
-<!--    <record model="ir.rule" id="see_employee">-->
-<!--        <field name="name">can create assign</field>-->
-<!--        <field name="model_id" ref="model_assignment_s"/>-->
-<!--        <field name="domain_force">[(1, '=', 1)]</field>-->
-<!--        <field name="groups" eval="[(4, ref('group_assignment_employee'))]"/>-->
-<!--        <field name="perm_create" eval="1"/>-->
-<!--        <field name="perm_write" eval="1"/>-->
-<!--        <field name="perm_unlink" eval="1"/>-->
-<!--        <field name="perm_read" eval="1"/>-->
-<!--    </record>-->
-
 </odoo>
