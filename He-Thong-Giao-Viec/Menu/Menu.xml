@@ -7,39 +7,47 @@
         <menuitem id="menu_view" name="Assignment System " sequence="10"/>
 
         <menuitem id="action_menu_view"
-                  name="Employee"
+                  name="Assignment"
                   action="action_menu"
                   parent="menu_view"
                   sequence="10"/>
-        <!--employee-->
-        <menuitem id="employee_view_menu"
-                  name="Add Employee"
-                  action="action_hr_employee"
-                  parent="action_menu_view"
-                  sequence="10"/>
-        <!--department-->
-        <menuitem id="department_view_menu"
-                  name="Department"
-                  action="action_hr_department"
-                  parent="action_menu_view"
-                  sequence="11"/>
         <!--assignment-->
-        <menuitem id="assignment_menu"
-                  name="Assignment"
-                  action="action_assignment_menu"
-                  parent="menu_view"
-                  sequence="10"/>
 
         <menuitem id="assignment_view_menu"
-                  name="Assignment"
+                  name="Assignments"
                   action="action_assignment_s"
-                  parent="assignment_menu"
-                  sequence="10"/>
+                  parent="action_menu_view"
+                  sequence="11"/>
 
         <menuitem id="my_assignment_view_menu"
                   name="My Assignment"
                   action="action_my_assignment"
-                  parent="assignment_menu"
+                  parent="action_menu_view"
+                  sequence="12"/>
+        <!--employee-->
+        <menuitem id="action_employee_tab_menu"
+                  name="Employee"
+                  action="action_employee_tab"
+                  parent="menu_view"
+                  sequence="10"/>
+
+        <menuitem id="employee_view_menu"
+                  name="Employees"
+                  action="action_hr_employee"
+                  parent="action_employee_tab_menu"
                   sequence="11"/>
+        <!--users-->
+        <menuitem id="users_view_menu"
+                  name="Users"
+                  action="action_res_users"
+                  parent="action_employee_tab_menu"
+                  sequence="12"/>
+        <!--department-->
+        <menuitem id="department_view_menu"
+                  name="Department"
+                  action="action_hr_department"
+                  parent="action_employee_tab_menu"
+                  sequence="13"/>
+
     </data>
 </odoo>
