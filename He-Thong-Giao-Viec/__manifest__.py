@@ -8,7 +8,9 @@
     'license': 'LGPL-3',
     'depends': [
         'hr',
-        'mail'
+        'mail',
+        'base',
+
     ],
     'data': [
         # Security
@@ -23,6 +25,7 @@
         'Views/department.xml',
         'Views/assignment.xml',
         'Views/my_assignment.xml',
+        'Views/users.xml',
         # Menu
         'Menu/Menu.xml'
     ],
