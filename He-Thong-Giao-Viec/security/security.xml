@@ -69,4 +69,11 @@
         <field name="groups" eval="[(4, ref('group_assignment_employee'))]"/>
     </record>
 
+    <record model="ir.rule" id="cant_change_status">
+        <field name="name">Can Change Status</field>
+        <field name="model_id" ref="model_assignment_s"/>
+        <field name="domain_force">[('employee','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_assignment_employee'))]"/>
+    </record>
+
 </odoo>
