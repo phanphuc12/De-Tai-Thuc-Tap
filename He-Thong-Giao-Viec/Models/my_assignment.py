@@ -6,13 +6,14 @@ class MyAssignment(models.Model):
     _inherit = ["mail.thread"]
     _description = "My Assignment"
 
-    name = fields.Char('name')
+    name = fields.Char(string='ID', required=True, copy=False, readonly=True, index=True,
+                           default=lambda self: _('New'))
     department = fields.Many2one('hr.department', string="Department", required=True)
     employee = fields.Many2one('hr.employee', string='Employee', required=True)
     deadline = fields.Datetime(string='Deadline', required=True)
     description = fields.Text(string='Description')
-    name_seq = fields.Char(string='ID', required=True, copy=False, readonly=True, index=True,
-                           default=lambda self: _('New'))
+    # name_seq = fields.Char(string='ID', required=True, copy=False, readonly=True, index=True,
+    #                        default=lambda self: _('New'))
     state = fields.Selection(
         [('received', 'Received'),
          ('complete', 'Completed'),
@@ -23,7 +24,7 @@ class MyAssignment(models.Model):
     def action_complete(self):
         for rec in self:
             rec.state = 'complete'
-            ma = self.env['assignment.s'].search([('name_seq', '=', rec.name_seq)])
-            if ma.name_seq:
+            ma = self.env['assignment.s'].search([('name', '=', rec.name)])
+            if ma.name:
                 ma.state = "complete"
                 print('check...', ma.state)
