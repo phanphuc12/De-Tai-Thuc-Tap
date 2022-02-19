@@ -5,16 +5,17 @@
             <field name="name">my assignment form</field>
             <field name="model">my.assignment</field>
             <field name="arch" type="xml">
-                <form string="My Assignment">
+                <form string="My Assignment" create="false">
                     <header>
                         <button name="action_complete" type="object" string="Complete" class="btn-primary"
-                                states="received" attrs="{'invisible': [('state','=', 'confirm')]}"/>/>
+                                states="received"
+                                attrs="{'invisible': [('state','=','confirm')]}"/>/>
                         <field name="state" widget="statusbar" statusbar_visible="received,complete,confirm"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
                             <h1>
-                                <field name="name_seq" readonly="1"/>
+                                <field name="name" readonly="1"/>
                             </h1>
                         </div>
                         <group name="info">
@@ -29,7 +30,7 @@
                         </group>
                         <group name="invisible_field">
                             <field name="current_user"/>
-                            <field name="name" invisible="1"/>
+<!--                            <field name="name" invisible="1"/>-->
                         </group>
                     </sheet>
                     <div class="oe_chatter">
@@ -44,9 +45,10 @@
             <field name="name">my_assignment_view</field>
             <field name="model">my.assignment</field>
             <field name="arch" type="xml">
-                <tree string="tree_my_assignment" default_order="create_date desc" decoration-warning="state == 'received'"
-                decoration-info="state == 'complete'" decoration-success="state == 'confirm'" expand="1">
-                    <field name="name_seq"/>
+                <tree string="tree_my_assignment" create="false" default_order="create_date desc"
+                      decoration-warning="state == 'received'"
+                      decoration-info="state == 'complete'" decoration-success="state == 'confirm'" expand="1">
+<!--                    <field name="name_seq"/>-->
                     <field name="employee"/>
                     <field name="deadline"/>
                     <field name="state"/>
