@@ -48,6 +48,12 @@
                   action="action_hr_department"
                   parent="action_employee_tab_menu"
                   sequence="13"/>
+        <!--Projects-->
+        <menuitem id="action_project_menu"
+                  name="Projects"
+                  action="action_projects"
+                  parent="menu_view"
+                  sequence="10"/>
 
     </data>
 </odoo>
