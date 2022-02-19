@@ -9,5 +9,11 @@
             <field name="padding">4</field>
         </record>
 
+        <record id="seq_projects" model="ir.sequence">
+            <field name="name">projects Sequence</field>
+            <field name="code">project.s.sequence</field>
+            <field name="prefix">PJ</field>
+            <field name="padding">4</field>
+        </record>
     </data>
 </odoo>
