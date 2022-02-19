@@ -26,6 +26,7 @@
         'Views/assignment.xml',
         'Views/my_assignment.xml',
         'Views/users.xml',
+        'Views/projects.xml',
         # Menu
         'Menu/Menu.xml'
     ],
