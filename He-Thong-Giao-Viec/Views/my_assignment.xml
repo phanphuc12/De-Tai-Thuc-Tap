@@ -18,20 +18,50 @@
                                 <field name="name" readonly="1"/>
                             </h1>
                         </div>
-                        <group name="info">
+                        <group>
+                            <field name="current_user" readonly="1"/>
+                        </group>
+                        <group name="inf">
+                            <separator string="Employee" colspan="2"/>
                             <group>
                                 <field name="department"/>
                                 <field name="employee"/>
                             </group>
                             <group>
-                                <field name="description"/>
                                 <field name="deadline"/>
                             </group>
+                            <group>
+                                <field name="project_right"/>
+                            </group>
                         </group>
-                        <group name="invisible_field">
-                            <field name="current_user"/>
-<!--                            <field name="name" invisible="1"/>-->
+                        <separator string="Attachment" colspan="2"/>
+                        <group>
+                            <field name="file" filename="file_name"/>
+                            <field name="file_name" invisible="1"/>
+                            <field name="description"/>
                         </group>
+                        <notebook>
+                            <page string="Project" attrs="{'invisible': [('project_right','=',False)]}">
+                                <group>
+                                    <separator string="Project" colspan="2"/>
+                                    <group>
+                                        <field name="project_id" attrs="{'invisible': [('project_right','=',False)]}"/>
+                                    </group>
+                                    <separator string="Project Information" colspan="2"/>
+                                    <group>
+                                        <field name="name_pm" attrs="{'visible': [('project_id','=',None)]}"/>
+                                        <field name="start_date" attrs="{'visible': [('project_id','=',True)]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Reply">
+                                <separator string="File Attachment" colspan="2"/>
+                                <group>
+                                    <field name="reply_file" filename="reply_file_name"/>
+                                    <field name="reply_file_name" invisible="1"/>
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids"/>
@@ -48,7 +78,7 @@
                 <tree string="tree_my_assignment" create="false" default_order="create_date desc"
                       decoration-warning="state == 'received'"
                       decoration-info="state == 'complete'" decoration-success="state == 'confirm'" expand="1">
-<!--                    <field name="name_seq"/>-->
+                    <field name="name"/>
                     <field name="employee"/>
                     <field name="deadline"/>
                     <field name="state"/>
