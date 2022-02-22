@@ -8,8 +8,8 @@ class Projects(models.Model):
     name = fields.Char(string='ID', required=True, copy=False, readonly=True, index=True,
                        default=lambda self: _('New'))
     project = fields.Char(string="Project Name", required=True)
-    department = fields.Many2many('hr.department', string='Department', required=True)
-    employee = fields.Many2one('hr.employee', string='PM Name', required=True)
+    department = fields.Many2one('hr.department', string='Department', required=True)
+    name_pm = fields.Many2one('res.users', string='PM Name', required=True)
     start_date = fields.Date(string="Start Date", requied=True)
     description = fields.Text(string="Description")
 
@@ -23,5 +23,4 @@ class Projects(models.Model):
     @api.onchange('department')
     def related_department(self):
         for rec in self:
-            # print('print:....', rec.current_user)
             return {'domain': {'employee': [('department_id', '=', rec.department.id)]}}
