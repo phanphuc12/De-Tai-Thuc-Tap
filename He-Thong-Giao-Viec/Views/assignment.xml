@@ -8,11 +8,10 @@
                 <form string="Assignments">
                     <header>
                         <button name="send_assignment" string="Send Assignment" type="object" class="btn-primary"
-                        states="draft"/>
+                                states="draft"/>
                         <button name="action_confirm" type="object" string="Confirm" class="btn-primary"
                                 attrs="{'invisible': [('state','!=', 'complete'), ('state','!=', 'send')]}"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,send,complete,confirm"/>
-
                     </header>
                     <sheet>
                         <div class="oe_title">
@@ -20,20 +19,52 @@
                                 <field name="name" readonly="1"/>
                             </h1>
                         </div>
+                        <group>
+                            <field name="current_user" readonly="1"/>
+                            <field name="create_time" readonly="1"/>
+                        </group>
                         <group name="inf">
+                            <separator string="Employee" colspan="2"/>
                             <group>
                                 <field name="department"/>
                                 <field name="employee"/>
                             </group>
                             <group>
-                                <field name="description"/>
                                 <field name="deadline"/>
                             </group>
+                            <group>
+                                <field name="project_right"/>
+                            </group>
                         </group>
-                        <group name = "invisible_field">
-                            <field name="current_user"/>
-<!--                            <field name="name" invisible="1"/>-->
+                        <separator string="Attachment" colspan="2"/>
+                        <group>
+                            <field name="file" filename="file_name"/>
+                            <field name="file_name" invisible="1"/>
+                            <field name="description"/>
                         </group>
+                        <notebook>
+                            <page string="Project" attrs="{'invisible': [('project_right','=',False)]}">
+                                <group>
+                                    <separator string="Project" colspan="2"/>
+                                    <group>
+                                        <field name="project_id" attrs="{'invisible': [('project_right','=',False)]}"/>
+                                    </group>
+                                    <separator string="Project Information" colspan="2"/>
+                                    <group>
+                                        <field name="name_pm" attrs="{'visible': [('project_id','=',None)]}"/>
+                                        <field name="start_date" attrs="{'visible': [('project_id','=',True)]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Reply"
+                                  attrs="{'invisible': [('state','!=', 'complete'), ('state','!=', 'confirm')]}">
+                                <separator string="File Attachment" colspan="2"/>
+                                <group>
+                                    <field name="reply_file" filename="reply_file_name"/>
+                                    <field name="reply_file_name" invisible="1"/>
+                                </group>
+                            </page>
+                        </notebook>
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids"/>
@@ -48,8 +79,9 @@
             <field name="model">assignment.s</field>
             <field name="arch" type="xml">
                 <tree string="tree_assignment" default_order="create_date desc" decoration-muted="state == 'draft'"
-                      decoration-success="state == 'confirm'" decoration-warning="state == 'send'" decoration-info="state == 'complete'" expand="1">
-<!--                    <field name="name_seq"/>-->
+                      decoration-success="state == 'confirm'" decoration-warning="state == 'send'"
+                      decoration-info="state == 'complete'" expand="1">
+                    <field name="name"/>
                     <field name="employee"/>
                     <field name="deadline"/>
                     <field name="state"/>
