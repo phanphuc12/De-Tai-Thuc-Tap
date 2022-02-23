@@ -28,6 +28,14 @@ class assignment(models.Model):
     file_name = fields.Char(string="File Name")
     reply_file = fields.Binary(string='Attached Files', tracking=True)
     reply_file_name = fields.Char(string='Reply File Name')
+    color = fields.Integer('Color Index', compute="set_kanban_color")
+    status_kanban_colour = fields.Selection([
+        ('draft', 'Gray'),
+        ('send', 'Yellow'),
+        ('complete', 'Blue'),
+        ('confirm', 'Green')
+
+    ], string='color', copy=False, default='draft')
 
     def send_assignment(self):
         vals = {
@@ -42,19 +50,39 @@ class assignment(models.Model):
             'start_date': self.start_date,
             'file': self.file,
             'file_name': self.file_name,
+            'create_time': self.create_time,
 
         }
         for rec in self:
             rec.state = 'send'
+            rec.employee.notify_warning('You have new assignment: ' + rec.name,
+                                        "Notification from My Assignment")
             # print('print:....', rec.current_user)
         self.env['my.assignment'].create(vals)
 
     def action_confirm(self):
         for rec in self:
             rec.state = 'confirm'
+            rec.employee.notify_success('Assignment' + ' is confirmed: ' + rec.name,
+                                        "Notification from My Assignment")
             ma = self.env['my.assignment'].search([('name', '=', rec.name)])
             if ma.name:
                 ma.state = "confirm"
+
+    def set_kanban_color(self):
+        for record in self:
+            color = 0
+            if record.state == 'draft':
+                color = 0
+            elif record.state == 'send':
+                color = 3
+            elif record.state == 'complete':
+                color = 4
+            elif record.state == 'confirm':
+                color = 10
+            else:
+                color = 1
+            record.color = color
 
     @api.model
     def create(self, vals):
