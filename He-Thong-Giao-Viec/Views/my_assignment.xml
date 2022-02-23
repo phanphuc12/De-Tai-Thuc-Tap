@@ -9,7 +9,7 @@
                     <header>
                         <button name="action_complete" type="object" string="Complete" class="btn-primary"
                                 states="received"
-                                attrs="{'invisible': [('state','=','confirm')]}"/>/>
+                                attrs="{'invisible': [('state','=','confirm')]}" confirm="Complete this form?"/>
                         <field name="state" widget="statusbar" statusbar_visible="received,complete,confirm"/>
                     </header>
                     <sheet>
@@ -20,6 +20,7 @@
                         </div>
                         <group>
                             <field name="current_user" readonly="1"/>
+                            <field name="create_time" readonly="1"/>
                         </group>
                         <group name="inf">
                             <separator string="Employee" colspan="2"/>
