@@ -11,6 +11,7 @@ class MyAssignment(models.Model):
     department = fields.Many2one('hr.department', string="Department", required=True)
     employee = fields.Many2one('hr.employee', string='Employee', required=True)
     deadline = fields.Datetime(string='Deadline', required=True)
+    create_time = fields.Datetime("Create Time", default=lambda self: fields.datetime.now())
     description = fields.Text(string='Description')
     state = fields.Selection(
         [('received', 'Received'),
@@ -30,10 +31,11 @@ class MyAssignment(models.Model):
     def action_complete(self):
         for rec in self:
             rec.state = 'complete'
+            rec.current_user.notify_info('Assignment' + ' is completed: ' + rec.name,
+                                         "Notification from Assignment")
             ma = self.env['assignment.s'].search([('name', '=', rec.name)])
             if ma.name:
                 ma.state = "complete"
                 ma.reply_file = rec.reply_file
                 ma.reply_file_name = rec.reply_file_name
                 print('check...', ma.state)
-
