@@ -14,8 +14,9 @@
                     </header>
                     <sheet>
                         <div class="oe_title">
-                            <h1>
-                                <field name="name" readonly="1"/>
+                            <h1 class="d-flex flex-row justify-content-between">
+                                <field name="name" readonly="1" default_focus="1"/>
+                                <field name="priority" widget="priority"/>
                             </h1>
                         </div>
                         <group>
@@ -72,6 +73,83 @@
             </field>
         </record>
 
+        <record id="my_assignment_view_kanban" model="ir.ui.view">
+            <field name="name">My Assignment Kanban</field>
+            <field name="model">my.assignment</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" widget="bold" group_create="false" quick_create="false"
+                        records_draggable="true" create="false">
+                    <field name="name"/>
+                    <field name="state"/>
+                    <field name="color"/>
+                    <progressbar field="state"
+                                 colors='{"draft": "muted", "received": "warning", "complete": "info", "confirm": "success"}'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_global_click">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <ul>
+                                            <field name="name" widget="bold"/>
+                                            <li class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                role="img" id="oe_hr_attendance_status"
+                                                attrs="{'invisible': [('state','!=','confirm')]}"
+                                                aria-label="Available" title="Available"
+                                                style="color: #10FF50;">
+                                            </li>
+                                            <li role="img" id="oe_hr_attendance_status"
+                                                class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                attrs="{'invisible': [('state','!=','received')]}"
+                                                aria-label="Available" title="Available"
+                                                style="color: #f59042;">
+                                            </li>
+                                            <li role="img" id="oe_hr_attendance_status"
+                                                class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                attrs="{'invisible': [('state','!=','complete')]}"
+                                                aria-label="Available" title="Available"
+                                                style="color: #0880F7;">
+                                            </li>
+                                            <li role="img" id="oe_hr_attendance_status"
+                                                class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                attrs="{'invisible': [('state','!=','draft')]}"
+                                                aria-label="Available" title="Available"
+                                                style="color: #8F9594;">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="oe_dropdown_kanban">
+                                        <div class="oe_dropdown_toggle">
+                                            <i class="fa fa-bars fa-lg" title="Manage" aria-label="manage"/>
+                                            <ul class="oe_dropdown_menu">
+                                                <li>
+                                                    <a type="delete">Delete</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div t-attf-class="o_kanban_record_body">
+                                    From:
+                                    <field name="current_user"/>
+                                    <br/>
+
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <field name="priority" widget="priority"/>
+                                        <field name="deadline" widget="italic"/>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="current_user" widget="many2one_avatar_user"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
         <record id="my_assignment_view" model="ir.ui.view">
             <field name="name">my_assignment_view</field>
             <field name="model">my.assignment</field>
@@ -115,7 +193,7 @@
             <field name="name">My Assignment</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">my.assignment</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
             <field name="context">{'search_default_state': 1}</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
