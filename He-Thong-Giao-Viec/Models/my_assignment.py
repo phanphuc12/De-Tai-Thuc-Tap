@@ -27,6 +27,12 @@ class MyAssignment(models.Model):
     file_name = fields.Char(string="File Name")
     reply_file = fields.Binary(string='Attached Files', tracking=True)
     reply_file_name = fields.Char(string='Reply File Name')
+    color = fields.Integer('Color Index', compute="set_kanban_color")
+    priority = fields.Selection([
+        ('0', 'Low'),
+        ('1', 'Medium'),
+        ('2', 'High')
+    ], default='0')
 
     def action_complete(self):
         for rec in self:
@@ -39,3 +45,18 @@ class MyAssignment(models.Model):
                 ma.reply_file = rec.reply_file
                 ma.reply_file_name = rec.reply_file_name
                 print('check...', ma.state)
+
+    def set_kanban_color(self):
+        for record in self:
+            color = 0
+            if record.state == 'draft':
+                color = 0
+            elif record.state == 'received':
+                color = 3
+            elif record.state == 'complete':
+                color = 4
+            elif record.state == 'confirm':
+                color = 10
+            else:
+                color = 1
+            record.color = color
