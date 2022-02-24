@@ -105,7 +105,7 @@
             <field name="name">Assignment Kanban</field>
             <field name="model">assignment.s</field>
             <field name="arch" type="xml">
-                <kanban default_group_by="state" widget="bold" group_create="false" quick_create="false"
+                <kanban default_group_by="state" group_create="false" quick_create="false"
                         records_draggable="true">
                     <field name="name"/>
                     <field name="state"/>
@@ -115,63 +115,67 @@
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_global_click">
-                                <div class="o_kanban_record_top">
-                                    <div class="o_kanban_record_headings">
-                                        <ul>
-                                            <field name="name" widget="bold"/>
-                                            <li class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
-                                                role="img" id="oe_hr_attendance_status"
-                                                attrs="{'invisible': [('state','!=','confirm')]}"
-                                                aria-label="Available" title="Available"
-                                                style="color: #10FF50;">
-                                            </li>
-                                            <li role="img" id="oe_hr_attendance_status"
-                                                class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
-                                                attrs="{'invisible': [('state','!=','send')]}"
-                                                aria-label="Available" title="Available"
-                                                style="color: #f59042;">
-                                            </li>
-                                            <li role="img" id="oe_hr_attendance_status"
-                                                class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
-                                                attrs="{'invisible': [('state','!=','complete')]}"
-                                                aria-label="Available" title="Available"
-                                                style="color: #0880F7;">
-                                            </li>
-                                            <li role="img" id="oe_hr_attendance_status"
-                                                class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
-                                                attrs="{'invisible': [('state','!=','draft')]}"
-                                                aria-label="Available" title="Available"
-                                                style="color: #8F9594;">
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="oe_dropdown_kanban">
-                                        <div class="oe_dropdown_toggle">
-                                            <i class="fa fa-bars fa-lg" title="Manage" aria-label="manage"/>
-                                            <ul class="oe_dropdown_menu">
-                                                <li>
-                                                    <a type="delete">Delete</a>
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top">
+                                        <div class="o_kanban_record_headings">
+                                            <ul>
+                                                <big><field name="name" widget="bold"/></big>
+                                                <li class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                    role="img" id="oe_hr_attendance_status"
+                                                    attrs="{'invisible': [('state','!=','confirm')]}"
+                                                    aria-label="Available" title="Available"
+                                                    style="color: #10FF50;">
+                                                </li>
+                                                <li role="img" id="oe_hr_attendance_status"
+                                                    class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                    attrs="{'invisible': [('state','!=','send')]}"
+                                                    aria-label="Available" title="Available"
+                                                    style="color: #f59042;">
+                                                </li>
+                                                <li role="img" id="oe_hr_attendance_status"
+                                                    class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                    attrs="{'invisible': [('state','!=','complete')]}"
+                                                    aria-label="Available" title="Available"
+                                                    style="color: #0880F7;">
+                                                </li>
+                                                <li role="img" id="oe_hr_attendance_status"
+                                                    class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                    attrs="{'invisible': [('state','!=','draft')]}"
+                                                    aria-label="Available" title="Available"
+                                                    style="color: #8F9594;">
                                                 </li>
                                             </ul>
                                         </div>
+                                        <div class="oe_kanban_top_right">
+                                            <div class="oe_dropdown_kanban">
+                                                <div class="oe_dropdown_toggle">
+                                                    <i class="fa fa-bars fa-lg" title="Manage" aria-label="manage"/>
+                                                    <ul class="oe_dropdown_menu">
+                                                        <li>
+                                                            <a type="delete">Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div t-attf-class="o_kanban_record_body">
-                                    From:
-                                    <field name="current_user"/>
-                                    <br/>
-                                    To:
-                                    <field name="employee"/>
-                                    <br/>
+                                    <div t-attf-class="o_kanban_record_body">
+                                        From:
+                                        <field name="current_user"/>
+                                        <br/>
+                                        To:
+                                        <field name="employee"/>
+                                        <br/>
 
-                                </div>
-                                <div class="o_kanban_record_bottom">
-                                   <div class="oe_kanban_bottom_left">
-                                        <field name="priority" widget="priority"/>
-                                        <field name="deadline" widget="italic"/>
                                     </div>
-                                    <div class="oe_kanban_bottom_right">
-                                        <field name="employee" widget="many2one_avatar_user"/>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <field name="priority" widget="priority"/>
+                                            <field name="deadline" widget="italic"/>
+                                        </div>
+                                        <div class="oe_kanban_bottom_right">
+                                            <field name="employee" widget="many2one_avatar_user"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
