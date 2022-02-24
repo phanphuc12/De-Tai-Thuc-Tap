@@ -29,13 +29,11 @@ class assignment(models.Model):
     reply_file = fields.Binary(string='Attached Files', tracking=True)
     reply_file_name = fields.Char(string='Reply File Name')
     color = fields.Integer('Color Index', compute="set_kanban_color")
-    status_kanban_colour = fields.Selection([
-        ('draft', 'Gray'),
-        ('send', 'Yellow'),
-        ('complete', 'Blue'),
-        ('confirm', 'Green')
-
-    ], string='color', copy=False, default='draft')
+    priority = fields.Selection([
+        ('0', 'Low'),
+        ('1', 'Medium'),
+        ('2', 'High')
+    ], default='0')
 
     def send_assignment(self):
         vals = {
@@ -51,6 +49,7 @@ class assignment(models.Model):
             'file': self.file,
             'file_name': self.file_name,
             'create_time': self.create_time,
+            'priority': self.priority
 
         }
         for rec in self:
