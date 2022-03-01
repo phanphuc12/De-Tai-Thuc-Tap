@@ -9,16 +9,19 @@ class MyAssignment(models.Model):
     name = fields.Char(string='ID', required=True, copy=False, readonly=True, index=True,
                        default=lambda self: _('New'))
     department = fields.Many2one('hr.department', string="Department", required=True)
-    employee = fields.Many2one('hr.employee', string='Employee', required=True)
+    employee = fields.Many2one('res.users', string='Employee', required=True)
     deadline = fields.Datetime(string='Deadline', required=True)
-    create_time = fields.Datetime("Create Time", default=lambda self: fields.datetime.now())
+    create_date = fields.Date("Create Date", default=fields.Date.today)
+    create_time = fields.Char("Create Time",
+                              default=lambda self: fields.datetime.now().strftime('%H:%M'))
     description = fields.Text(string='Description')
     state = fields.Selection(
         [('received', 'Received'),
          ('complete', 'Completed'),
          ('confirm', 'Confirmed')
          ], string='Status', default='received', readonly=True, tracking=True)
-    current_user = fields.Many2one('res.users', 'Creator', default=lambda self: self.env.user, readonly=True)
+    creator = fields.Many2one('res.users', 'Creator', readonly=True)
+    current_user = fields.Many2one('res.users', string='Current User', default=lambda self: self.env.user)
     project_id = fields.Many2one('project.s', string='Project')
     project_right = fields.Boolean(string='In The Project')
     name_pm = fields.Many2one('res.users', related='project_id.name_pm', string='PM Name')
@@ -33,20 +36,14 @@ class MyAssignment(models.Model):
         ('1', 'Medium'),
         ('2', 'High')
     ], default='0')
-
-    def action_complete(self):
-        for rec in self:
-            rec.state = 'complete'
-            rec.current_user.notify_info('Assignment' + ' is completed: ' + rec.name,
-                                         "Notification from Assignment")
-            ma = self.env['assignment.s'].search([('name', '=', rec.name)])
-            if ma.name:
-                ma.state = "complete"
-                ma.reply_file = rec.reply_file
-                ma.reply_file_name = rec.reply_file_name
-                print('check...', ma.state)
+    topic = fields.Many2one('topic.category', string="Topic")
+    type = fields.Selection([
+        ('1', 'From'),
+        ('2', 'To')
+    ], readonly=True, default=False)
 
     def set_kanban_color(self):
+
         for record in self:
             color = 0
             if record.state == 'draft':
@@ -60,3 +57,12 @@ class MyAssignment(models.Model):
             else:
                 color = 1
             record.color = color
+
+    def action_complete(self):
+        for rec in self:
+            rec.state = 'complete'
+        self.env['assignment.s'].search([('name', '=', self.name)]).write({
+            'state': 'complete',
+            'reply_file': self.reply_file,
+            'reply_file_name': self.reply_file_name,
+        })
