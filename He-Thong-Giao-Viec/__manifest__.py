@@ -1,7 +1,7 @@
 {
     'name': 'Assignment System',
     'version': '1.0',
-    'summary': 'He Thog Giao Viec',
+    'summary': 'He Thong Giao Viec',
     'sequence': -10,
     'description': """He Thong Giao Viec""",
     'category': 'Human Resources',
@@ -27,6 +27,7 @@
         'Views/my_assignment.xml',
         'Views/users.xml',
         'Views/projects.xml',
+        'Views/topic_categories.xml',
         'Views/templates.xml',
         # Menu
         'Menu/Menu.xml'
