@@ -6,3 +6,4 @@ access_hr_family,access.hr.family,model_hr_family,,1,1,1,1
 access_my_assignment,access.my.assignment,model_my_assignment,,1,1,1,1
 access_res_users,access.res.users,model_res_users,,1,1,1,1
 access_project_s,access.project.s,model_project_s,,1,1,1,1
+access_topic_category,access.topic.category,model_topic_category,,1,1,1,1
