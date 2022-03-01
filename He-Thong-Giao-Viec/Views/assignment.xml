@@ -37,6 +37,13 @@
                                      attrs="{'invisible': [('state','!=','confirm')]}"
                                      aria-label="Available" title="Available"
                                      style="color: #10FF50;"/>
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="create_time" widget="time" readonly="1"/>
+                                        <br/>
+                                        <field name="create_date" readonly="1"/>
+                                    </span>
+                                </div>
                             </button>
                         </div>
 
@@ -47,8 +54,7 @@
                             </h1>
                         </div>
                         <group>
-                            <field name="current_user" readonly="1"/>
-                            <field name="create_time" readonly="1"/>
+                            <field name="creator" readonly="1"/>
                         </group>
                         <group name="inf">
                             <separator string="Employee" colspan="2"/>
@@ -57,11 +63,16 @@
                                 <field name="employee"/>
                             </group>
                             <group>
+                                <field name="topic"/>
                                 <field name="deadline"/>
                             </group>
                             <group>
                                 <field name="project_right"/>
                             </group>
+                        </group>
+                        <group name="invisible_field">
+                            <field name="type"/>
+<!--                            <field name="current_user"/>-->
                         </group>
                         <separator string="Attachment" colspan="2"/>
                         <group>
@@ -119,7 +130,9 @@
                                     <div class="o_kanban_record_top">
                                         <div class="o_kanban_record_headings">
                                             <ul>
-                                                <big><field name="name" widget="bold"/></big>
+                                                <big>
+                                                    <field name="name" widget="bold"/>
+                                                </big>
                                                 <li class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
                                                     role="img" id="oe_hr_attendance_status"
                                                     attrs="{'invisible': [('state','!=','confirm')]}"
@@ -160,12 +173,15 @@
                                         </div>
                                     </div>
                                     <div t-attf-class="o_kanban_record_body">
-                                        From:
-                                        <field name="current_user"/>
+
+                                        <strong>
+                                            <field name="topic"/>
+                                        </strong>
                                         <br/>
                                         To:
                                         <field name="employee"/>
                                         <br/>
+
 
                                     </div>
                                     <div class="o_kanban_record_bottom">
@@ -217,6 +233,10 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">assignment.s</field>
             <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[
+                ('creator', '=', uid)
+                ]
+            </field>
             <field name="context">{'search_default_state': 1}</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
