@@ -1,4 +1,7 @@
+import datetime
+
 from odoo import api, fields, models, _
+from datetime import datetime
 
 
 class assignment(models.Model):
@@ -18,11 +21,14 @@ class assignment(models.Model):
          ('confirm', 'Confirmed')
          ], string='Status', default='draft', readonly=True, tracking=True
     )
-    current_user = fields.Many2one('res.users', string='Creator', default=lambda self: self.env.user, readony=True)
+    creator = fields.Many2one('res.users', string='Creator', default=lambda self: self.env.user)
+    current_user = fields.Many2one('res.users', string='Current User', default=lambda self: self.env.user)
     project_id = fields.Many2one('project.s', string='Project')
     project_right = fields.Boolean(string='In The Project')
     name_pm = fields.Many2one('res.users', related='project_id.name_pm', string='PM Name')
-    create_time = fields.Datetime("Create Time", default=lambda self: fields.datetime.now())
+    create_date = fields.Date("Create Date", default=fields.Date.today)
+    create_time = fields.Char("Create Time",
+                              default=lambda self: fields.datetime.now().strftime('%H:%M'))
     start_date = fields.Date(string="Start Date", related='project_id.start_date')
     file = fields.Binary(string='Attached Files')
     file_name = fields.Char(string="File Name")
@@ -34,6 +40,21 @@ class assignment(models.Model):
         ('1', 'Medium'),
         ('2', 'High')
     ], default='0')
+    topic = fields.Many2one('topic.category', string="Topic", required=True)
+    type = fields.Selection([
+        ('1', 'From'),
+        ('2', 'To')
+    ], readonly=True, default='1')
+
+    def action_confirm(self):
+        print(self)
+        vals = {
+            'state': 'confirm',
+        }
+        for rec in self:
+            rec.state = 'confirm'
+            print('check...', vals)
+            self.env['my.assignment'].search([('name', '=', rec.name)]).write(vals)
 
     def send_assignment(self):
         vals = {
@@ -49,24 +70,15 @@ class assignment(models.Model):
             'file': self.file,
             'file_name': self.file_name,
             'create_time': self.create_time,
-            'priority': self.priority
+            'priority': self.priority,
+            'topic': self.topic.id,
+            'type': '2',
+            'creator': self.creator.id,
 
         }
         for rec in self:
             rec.state = 'send'
-            rec.employee.notify_warning('You have new assignment: ' + rec.name,
-                                        "Notification from My Assignment")
-            # print('print:....', rec.current_user)
         self.env['my.assignment'].create(vals)
-
-    def action_confirm(self):
-        for rec in self:
-            rec.state = 'confirm'
-            rec.employee.notify_success('Assignment' + ' is confirmed: ' + rec.name,
-                                        "Notification from My Assignment")
-            ma = self.env['my.assignment'].search([('name', '=', rec.name)])
-            if ma.name:
-                ma.state = "confirm"
 
     def set_kanban_color(self):
         for record in self:
