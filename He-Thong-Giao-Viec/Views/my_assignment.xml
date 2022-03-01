@@ -13,6 +13,37 @@
                         <field name="state" widget="statusbar" statusbar_visible="received,complete,confirm"/>
                     </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button id="hr_presence_button" class="oe_stat_button" disabled="1">
+                                <div role="img" id="oe_hr_attendance_status"
+                                     class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                     attrs="{'invisible': [('state','!=','received')]}"
+                                     aria-label="Available" title="Available"
+                                     style="color: #f59042;"/>
+                                <div role="img" id="oe_hr_attendance_status"
+                                     class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                     attrs="{'invisible': [('state','!=','complete')]}"
+                                     aria-label="Available" title="Available"
+                                     style="color: #0880F7;"/>
+                                <div role="img" id="oe_hr_attendance_status"
+                                     class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                     attrs="{'invisible': [('state','!=','draft')]}"
+                                     aria-label="Available" title="Available"
+                                     style="color: #8F9594;"/>
+                                <div role="img" id="oe_hr_attendance_status"
+                                     class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                     attrs="{'invisible': [('state','!=','confirm')]}"
+                                     aria-label="Available" title="Available"
+                                     style="color: #10FF50;"/>
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="create_time" widget="time" readonly="1"/>
+                                        <br/>
+                                        <field name="create_date" readonly="1"/>
+                                    </span>
+                                </div>
+                            </button>
+                        </div>
                         <div class="oe_title">
                             <h1 class="d-flex flex-row justify-content-between">
                                 <field name="name" readonly="1" default_focus="1"/>
@@ -20,8 +51,7 @@
                             </h1>
                         </div>
                         <group>
-                            <field name="current_user" readonly="1"/>
-                            <field name="create_time" readonly="1"/>
+                            <field name="creator" readonly="1"/>
                         </group>
                         <group name="inf">
                             <separator string="Employee" colspan="2"/>
@@ -35,6 +65,10 @@
                             <group>
                                 <field name="project_right"/>
                             </group>
+                        </group>
+                        <group name="invisible_field">
+                            <field name="type"/>
+<!--                            <field name="current_user"/>-->
                         </group>
                         <separator string="Attachment" colspan="2"/>
                         <group>
@@ -91,7 +125,9 @@
                                     <div class="o_kanban_record_top">
                                         <div class="o_kanban_record_headings">
                                             <ul>
-                                                <big><field name="name" widget="bold"/></big>
+                                                <big>
+                                                    <field name="name" widget="bold"/>
+                                                </big>
                                                 <li class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
                                                     role="img" id="oe_hr_attendance_status"
                                                     attrs="{'invisible': [('state','!=','confirm')]}"
@@ -132,8 +168,12 @@
                                         </div>
                                     </div>
                                     <div t-attf-class="o_kanban_record_body">
+                                        <strong>
+                                            <field name="topic"/>
+                                        </strong>
+                                        <br/>
                                         From:
-                                        <field name="current_user"/>
+                                        <field name="creator"/>
                                         <br/>
 
                                     </div>
@@ -143,7 +183,7 @@
                                             <field name="deadline" widget="italic"/>
                                         </div>
                                         <div class="oe_kanban_bottom_right">
-                                            <field name="current_user" widget="many2one_avatar_user"/>
+                                            <field name="creator" widget="many2one_avatar_user"/>
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +225,11 @@
             <field name="name">My Assignment</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">my.assignment</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[
+                ('employee', '=', uid)
+                ]
+            </field>
             <field name="context">{'search_default_state': 1}</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
@@ -198,6 +242,10 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">my.assignment</field>
             <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[
+                ('employee', '=', uid)
+                ]
+            </field>
             <field name="context">{'search_default_state': 1}</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
