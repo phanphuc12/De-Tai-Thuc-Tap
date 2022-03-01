@@ -49,11 +49,23 @@
                   parent="action_employee_tab_menu"
                   sequence="13"/>
         <!--Projects-->
+        <menuitem id="data_menu"
+                  name="Data"
+                  parent="menu_view"
+                  sequence="10"/>
+
         <menuitem id="action_project_menu"
                   name="Projects"
                   action="action_projects"
-                  parent="menu_view"
-                  sequence="10"/>
+                  parent="data_menu"
+                  sequence="11"/>
+        <!--Topics-->
+        <menuitem id="action_topic_menu"
+                  name="Topics"
+                  action="topic_action"
+                  parent="data_menu"
+                  sequence="12"/>
+
 
     </data>
 </odoo>
