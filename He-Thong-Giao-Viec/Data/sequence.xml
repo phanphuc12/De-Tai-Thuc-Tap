@@ -15,5 +15,12 @@
             <field name="prefix">PJ</field>
             <field name="padding">4</field>
         </record>
+
+        <record id="seq_assistance" model="ir.sequence">
+            <field name="name">Assistance Sequence</field>
+            <field name="code">assistance.s.sequence</field>
+            <field name="prefix">AST</field>
+            <field name="padding">4</field>
+        </record>
     </data>
 </odoo>
