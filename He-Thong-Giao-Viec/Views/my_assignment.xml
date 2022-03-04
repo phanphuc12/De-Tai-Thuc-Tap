@@ -61,14 +61,14 @@
                             </group>
                             <group>
                                 <field name="deadline"/>
+                                <field name="topic"/>
                             </group>
                             <group>
-                                <field name="project_right"/>
+                                <field name="project_right" attrs="{'invisible':[('type','=','2')]}"/>
                             </group>
                         </group>
                         <group name="invisible_field">
-                            <field name="type"/>
-<!--                            <field name="current_user"/>-->
+                            <field name="type" invisible="1"/>
                         </group>
                         <separator string="Attachment" colspan="2"/>
                         <group>
@@ -217,6 +217,9 @@
                     <group expand="1" string="group by">
                         <filter string="Status" name="state" context="{'group_by':'state'}"/>
                     </group>
+                    <searchpanel>
+                        <field name="type"/>
+                    </searchpanel>
                 </search>
             </field>
         </record>
@@ -249,7 +252,7 @@
             <field name="context">{'search_default_state': 1}</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
-                    Add New Assignment!!!
+                    There Are No Assignment!
                 </p>
             </field>
         </record>
