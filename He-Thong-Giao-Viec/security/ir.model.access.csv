@@ -7,3 +7,5 @@ access_my_assignment,access.my.assignment,model_my_assignment,,1,1,1,1
 access_res_users,access.res.users,model_res_users,,1,1,1,1
 access_project_s,access.project.s,model_project_s,,1,1,1,1
 access_topic_category,access.topic.category,model_topic_category,,1,1,1,1
+access_assignment_search_panel,access.assignment.search.panel,model_assignment_search_panel,,1,1,1,1
+access_assistance_s,access.assistance.s,model_assistance_s,,1,1,1,1
