@@ -24,6 +24,12 @@
                   action="action_my_assignment"
                   parent="action_menu_view"
                   sequence="12"/>
+        <!--Assistance-->
+        <menuitem id="action_assist_menu"
+                  name="Assistance"
+                  action="action_assistance_s"
+                  parent="menu_view"
+                  sequence="10"/>
         <!--employee-->
         <menuitem id="action_employee_tab_menu"
                   name="Employee"
