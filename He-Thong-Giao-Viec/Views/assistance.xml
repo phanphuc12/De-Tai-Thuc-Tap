@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="assistance_form" model="ir.ui.view">
+            <field name="name">assistance form</field>
+            <field name="model">assistance.s</field>
+            <field name="arch" type="xml">
+                <form string="Assistance">
+                    <header>
+                        <button name="send_assistance" string="Send Assistance" type="object" class="btn-primary"
+                                states="draft" confirm="Send this Assign?"/>
+                        <button name="action_confirm" type="object" string="Confirm" class="btn-primary"
+                                attrs="{'invisible': [('state','!=', 'complete'), ('state','!=', 'send')]}"
+                                confirm="Confirm this Assign?"/>
+                        <button name="action_decline" type="object" string="Decline" class="btn-primary"
+                                attrs="{'invisible': [('state','!=', 'complete')]}"
+                                confirm="Decline this Assign?"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,send,complete,confirm"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button id="hr_presence_button" class="oe_stat_button" disabled="1">
+                                <div role="img" id="oe_hr_attendance_status"
+                                     class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                     attrs="{'invisible': [('state','!=','send')]}"
+                                     aria-label="Available" title="Available"
+                                     style="color: #f59042;"/>
+                                <div role="img" id="oe_hr_attendance_status"
+                                     class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                     attrs="{'invisible': [('state','!=','complete')]}"
+                                     aria-label="Available" title="Available"
+                                     style="color: #0880F7;"/>
+                                <div role="img" id="oe_hr_attendance_status"
+                                     class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                     attrs="{'invisible': [('state','!=','draft')]}"
+                                     aria-label="Available" title="Available"
+                                     style="color: #8F9594;"/>
+                                <div role="img" id="oe_hr_attendance_status"
+                                     class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                     attrs="{'invisible': [('state','!=','confirm')]}"
+                                     aria-label="Available" title="Available"
+                                     style="color: #10FF50;"/>
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="create_time" widget="time" readonly="1"/>
+                                        <br/>
+                                        <field name="create_date" readonly="1"/>
+                                    </span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <div class="oe_title">
+                            <h1 class="d-flex flex-row justify-content-between">
+                                <field name="name" readonly="1" default_focus="1"/>
+                                <field name="priority" widget="priority"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="creator" readonly="1"/>
+                        </group>
+                        <group name="inf">
+                            <separator string="Employee" colspan="2"/>
+                            <group>
+                                <field name="department"/>
+                                <field name="employee"/>
+                            </group>
+                            <group>
+                                <field name="topic"/>
+                                <field name="deadline"/>
+                            </group>
+                        </group>
+                        <separator string="Attachment" colspan="2"/>
+                        <group>
+                            <field name="file" filename="file_name"/>
+                            <field name="file_name" invisible="1"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="assistance_view_kanban" model="ir.ui.view">
+            <field name="name">Assistance Kanban</field>
+            <field name="model">assistance.s</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" group_create="false" quick_create="false"
+                        records_draggable="true">
+                    <field name="name"/>
+                    <field name="state"/>
+                    <field name="color"/>
+                    <progressbar field="state"
+                                 colors='{"draft": "muted", "send": "warning", "complete": "info", "confirm": "success"}'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top">
+                                        <div class="o_kanban_record_headings">
+                                            <ul>
+                                                <big>
+                                                    <field name="name" widget="bold"/>
+                                                </big>
+                                                <li class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                    role="img" id="oe_hr_attendance_status"
+                                                    attrs="{'invisible': [('state','!=','confirm')]}"
+                                                    aria-label="Available" title="Available"
+                                                    style="color: #10FF50;">
+                                                </li>
+                                                <li role="img" id="oe_hr_attendance_status"
+                                                    class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                    attrs="{'invisible': [('state','!=','send')]}"
+                                                    aria-label="Available" title="Available"
+                                                    style="color: #f59042;">
+                                                </li>
+                                                <li role="img" id="oe_hr_attendance_status"
+                                                    class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                    attrs="{'invisible': [('state','!=','complete')]}"
+                                                    aria-label="Available" title="Available"
+                                                    style="color: #0880F7;">
+                                                </li>
+                                                <li role="img" id="oe_hr_attendance_status"
+                                                    class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                    attrs="{'invisible': [('state','!=','draft')]}"
+                                                    aria-label="Available" title="Available"
+                                                    style="color: #8F9594;">
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="oe_kanban_top_right">
+                                            <div class="oe_dropdown_kanban">
+                                                <div class="oe_dropdown_toggle">
+                                                    <i class="fa fa-bars fa-lg" title="Manage" aria-label="manage"/>
+                                                    <ul class="oe_dropdown_menu">
+                                                        <li>
+                                                            <a type="delete">Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div t-attf-class="o_kanban_record_body">
+
+                                        <strong>
+                                            <field name="topic"/>
+                                        </strong>
+                                        <br/>
+                                        To:
+                                        <field name="employee"/>
+                                        <br/>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <field name="priority" widget="priority"/>
+                                            <field name="deadline" widget="italic"/>
+                                        </div>
+                                        <div class="oe_kanban_bottom_right">
+                                            <field name="employee" widget="many2one_avatar_user"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="assistance_view_tree" model="ir.ui.view">
+            <field name="name">assistance_view</field>
+            <field name="model">assistance.s</field>
+            <field name="arch" type="xml">
+                <tree string="tree_assistance" decoration-muted="state == 'draft'"
+                      decoration-success="state == 'confirm'" decoration-warning="state == 'send'"
+                      decoration-info="state == 'complete'" expand="1">
+                    <field name="name" widget="bold"/>
+                    <field name="employee"/>
+                    <field name="deadline"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="assistance_search" model="ir.ui.view">
+            <field name="name">assistance.search</field>
+            <field name="model">assistance.s</field>
+            <field name="arch" type="xml">
+                <search string="Assistance">
+                    <group expand="1" string="group by">
+                        <filter string="Status" name="state" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_assistance_s" model="ir.actions.act_window">
+            <field name="name">Assistance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">assistance.s</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('creator', '=', uid)]
+            </field>
+            <field name="context">{'search_default_state': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create New Assignment!!!
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>
