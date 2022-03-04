@@ -21,10 +21,9 @@ class MyAssignment(models.Model):
          ('confirm', 'Confirmed')
          ], string='Status', default='received', readonly=True, tracking=True)
     creator = fields.Many2one('res.users', 'Creator', readonly=True)
-    current_user = fields.Many2one('res.users', string='Current User', default=lambda self: self.env.user)
     project_id = fields.Many2one('project.s', string='Project')
     project_right = fields.Boolean(string='In The Project')
-    name_pm = fields.Many2one('res.users', related='project_id.name_pm', string='PM Name')
+    name_pm = fields.Many2one('hr.employee', related='project_id.name_pm', string='PM Name')
     start_date = fields.Date(string="Start Date", related='project_id.start_date')
     file = fields.Binary(string='Attached Files')
     file_name = fields.Char(string="File Name")
@@ -38,9 +37,9 @@ class MyAssignment(models.Model):
     ], default='0')
     topic = fields.Many2one('topic.category', string="Topic")
     type = fields.Selection([
-        ('1', 'From'),
-        ('2', 'To')
-    ], readonly=True, default=False)
+        ('1', 'Assignment'),
+        ('2', 'Assistance')
+    ], string='type')
 
     def set_kanban_color(self):
 
@@ -61,8 +60,15 @@ class MyAssignment(models.Model):
     def action_complete(self):
         for rec in self:
             rec.state = 'complete'
-        self.env['assignment.s'].search([('name', '=', self.name)]).write({
-            'state': 'complete',
-            'reply_file': self.reply_file,
-            'reply_file_name': self.reply_file_name,
-        })
+            if rec.type == '1':
+                self.env['assignment.s'].search([('name', '=', self.name)]).write({
+                    'state': 'complete',
+                    'reply_file': self.reply_file,
+                    'reply_file_name': self.reply_file_name,
+                })
+            else:
+                self.env['assistance.s'].search([('name', '=', self.name)]).write({
+                    'state': 'complete',
+                    'reply_file': self.reply_file,
+                    'reply_file_name': self.reply_file_name,
+                })
