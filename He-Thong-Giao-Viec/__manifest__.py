@@ -29,6 +29,7 @@
         'Views/projects.xml',
         'Views/topic_categories.xml',
         'Views/templates.xml',
+        'Views/assistance.xml',
         # Menu
         'Menu/Menu.xml'
     ],
