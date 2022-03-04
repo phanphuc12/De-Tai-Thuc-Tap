@@ -22,10 +22,9 @@ class assignment(models.Model):
          ], string='Status', default='draft', readonly=True, tracking=True
     )
     creator = fields.Many2one('res.users', string='Creator', default=lambda self: self.env.user)
-    current_user = fields.Many2one('res.users', string='Current User', default=lambda self: self.env.user)
     project_id = fields.Many2one('project.s', string='Project')
     project_right = fields.Boolean(string='In The Project')
-    name_pm = fields.Many2one('res.users', related='project_id.name_pm', string='PM Name')
+    name_pm = fields.Many2one('hr.employee', related='project_id.name_pm', string='PM Name')
     create_date = fields.Date("Create Date", default=fields.Date.today)
     create_time = fields.Char("Create Time",
                               default=lambda self: fields.datetime.now().strftime('%H:%M'))
@@ -41,20 +40,31 @@ class assignment(models.Model):
         ('2', 'High')
     ], default='0')
     topic = fields.Many2one('topic.category', string="Topic", required=True)
-    type = fields.Selection([
-        ('1', 'From'),
-        ('2', 'To')
-    ], readonly=True, default='1')
+    type = fields.Char(string='Type', default='1')
+
+    # id_search = fields.Many2one('assignment.s', string='check_id', default="check_id")
+    #
+    # def check_id(self):
+    #     for rec in self:
+    #         rec.id_search = rec.name
+    #         print(rec.id_search)
 
     def action_confirm(self):
-        print(self)
+        # print(self)
         vals = {
             'state': 'confirm',
         }
         for rec in self:
             rec.state = 'confirm'
-            print('check...', vals)
+            # print('check...', vals)
             self.env['my.assignment'].search([('name', '=', rec.name)]).write(vals)
+
+    def action_decline(self):
+        for rec in self:
+            rec.state = 'send'
+            self.env['my.assignment'].search([('name', '=', rec.name)]).write({
+                'state': 'received'
+            })
 
     def send_assignment(self):
         vals = {
@@ -72,8 +82,8 @@ class assignment(models.Model):
             'create_time': self.create_time,
             'priority': self.priority,
             'topic': self.topic.id,
-            'type': '2',
             'creator': self.creator.id,
+            'type': self.type,
 
         }
         for rec in self:
@@ -82,7 +92,6 @@ class assignment(models.Model):
 
     def set_kanban_color(self):
         for record in self:
-            color = 0
             if record.state == 'draft':
                 color = 0
             elif record.state == 'send':
@@ -102,8 +111,24 @@ class assignment(models.Model):
         result = super(assignment, self).create(vals)
         return result
 
+    def write(self, vals):
+        for rec in self:
+            pr = self.env['my.assignment'].search([('name', '=', rec.name)]).write(vals)
+            ch = super(assignment, self).write(vals)
+            return pr, ch
+
+    @api.onchange('topic')
+    def assignment_only(self):
+        for rec in self:
+            return {'domain': {'topic': [('type', '=', rec.type)]}}
+
     @api.onchange('department')
     def related_department(self):
         for rec in self:
-            # print('print:....', rec.current_user)
             return {'domain': {'employee': [('department_id', '=', rec.department.id)]}}
+
+
+class AssignmentSearchPanel(models.Model):
+    _name = "assignment.search.panel"
+
+    check_id = fields.Many2one('assignment.s', string='ID')
