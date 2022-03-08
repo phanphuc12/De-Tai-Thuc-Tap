@@ -22,5 +22,19 @@
             <field name="prefix">AST</field>
             <field name="padding">4</field>
         </record>
+
+        <record id="seq_employee" model="ir.sequence">
+            <field name="name">Employee Sequence</field>
+            <field name="code">employee.s.sequence</field>
+            <field name="prefix">EPL</field>
+            <field name="padding">4</field>
+        </record>
+
+        <record id="seq_department" model="ir.sequence">
+            <field name="name">Department Sequence</field>
+            <field name="code">department.s.sequence</field>
+            <field name="prefix">DPM</field>
+            <field name="padding">4</field>
+        </record>
     </data>
 </odoo>

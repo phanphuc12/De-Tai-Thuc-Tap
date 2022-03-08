@@ -62,7 +62,7 @@
                         <group name="inf">
                             <separator string="Employee" colspan="2"/>
                             <group>
-                                <field name="department"/>
+                                <field name="department" readonly="1"/>
                                 <field name="employee"/>
                             </group>
                             <group>
@@ -73,9 +73,9 @@
                                 <field name="project_right"/>
                             </group>
                         </group>
-                        <!--                        <group name="invisible_field">-->
-                        <!--                            <field name="id_search" readonly="1"/>-->
-                        <!--                        </group>-->
+<!--                        <group name="invisible_field">-->
+<!--                            <field name="creator_user" invisible="1"/>-->
+<!--                        </group>-->
                         <separator string="Attachment" colspan="2"/>
                         <group>
                             <field name="file" filename="file_name"/>
@@ -190,7 +190,7 @@
                                             <field name="deadline" widget="italic"/>
                                         </div>
                                         <div class="oe_kanban_bottom_right">
-                                            <field name="employee" widget="many2one_avatar_user"/>
+                                            <field name="employee" widget="many2one_avatar_employee"/>
                                         </div>
                                     </div>
                                 </div>
@@ -237,7 +237,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">assignment.s</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="domain">[('creator', '=', uid)]
+            <field name="domain">[('creator.user_id', '=', uid)]
             </field>
             <field name="context">{'search_default_state': 1}</field>
             <field name="help" type="html">

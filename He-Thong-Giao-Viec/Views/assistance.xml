@@ -76,6 +76,9 @@
                             <field name="file_name" invisible="1"/>
                             <field name="description"/>
                         </group>
+<!--                        <group name="invisible_field">-->
+<!--                            <field name="creator_user" invisible="1"/>-->
+<!--                        </group>-->
                     </sheet>
                     <div class="oe_chatter">
                         <field name="message_follower_ids"/>
@@ -161,7 +164,7 @@
                                             <field name="deadline" widget="italic"/>
                                         </div>
                                         <div class="oe_kanban_bottom_right">
-                                            <field name="employee" widget="many2one_avatar_user"/>
+                                            <field name="employee" widget="many2one_avatar_employee"/>
                                         </div>
                                     </div>
                                 </div>
@@ -204,7 +207,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">assistance.s</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="domain">[('creator', '=', uid)]
+            <field name="domain">[('creator.user_id', '=', uid)]
             </field>
             <field name="context">{'search_default_state': 1}</field>
             <field name="help" type="html">

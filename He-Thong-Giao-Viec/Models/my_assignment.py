@@ -9,7 +9,7 @@ class MyAssignment(models.Model):
     name = fields.Char(string='ID', required=True, copy=False, readonly=True, index=True,
                        default=lambda self: _('New'))
     department = fields.Many2one('hr.department', string="Department", required=True)
-    employee = fields.Many2one('res.users', string='Employee', required=True)
+    employee = fields.Many2one('hr.employee', string='Employee', required=True)
     deadline = fields.Datetime(string='Deadline', required=True)
     create_date = fields.Date("Create Date", default=fields.Date.today)
     create_time = fields.Char("Create Time",
@@ -20,7 +20,7 @@ class MyAssignment(models.Model):
          ('complete', 'Completed'),
          ('confirm', 'Confirmed')
          ], string='Status', default='received', readonly=True, tracking=True)
-    creator = fields.Many2one('res.users', 'Creator', readonly=True)
+    creator = fields.Many2one('hr.employee', string="Creator", readonly=True)
     project_id = fields.Many2one('project.s', string='Project')
     project_right = fields.Boolean(string='In The Project')
     name_pm = fields.Many2one('hr.employee', related='project_id.name_pm', string='PM Name')
@@ -44,7 +44,6 @@ class MyAssignment(models.Model):
     def set_kanban_color(self):
 
         for record in self:
-            color = 0
             if record.state == 'draft':
                 color = 0
             elif record.state == 'received':

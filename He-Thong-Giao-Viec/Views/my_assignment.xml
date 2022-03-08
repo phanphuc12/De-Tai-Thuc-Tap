@@ -47,7 +47,7 @@
                         <div class="oe_title">
                             <h1 class="d-flex flex-row justify-content-between">
                                 <field name="name" readonly="1" default_focus="1"/>
-                                <field name="priority" widget="priority"/>
+                                <field name="priority" widget="priority" readonly="1"/>
                             </h1>
                         </div>
                         <group>
@@ -56,12 +56,12 @@
                         <group name="inf">
                             <separator string="Employee" colspan="2"/>
                             <group>
-                                <field name="department"/>
-                                <field name="employee"/>
+                                <field name="department" readonly="1"/>
+                                <field name="employee" readonly="1"/>
                             </group>
                             <group>
-                                <field name="deadline"/>
-                                <field name="topic"/>
+                                <field name="deadline" readonly="1"/>
+                                <field name="topic" readonly="1"/>
                             </group>
                             <group>
                                 <field name="project_right" attrs="{'invisible':[('type','=','2')]}"/>
@@ -183,7 +183,7 @@
                                             <field name="deadline" widget="italic"/>
                                         </div>
                                         <div class="oe_kanban_bottom_right">
-                                            <field name="creator" widget="many2one_avatar_user"/>
+                                            <field name="creator" widget="many2one_avatar_employee"/>
                                         </div>
                                     </div>
                                 </div>
@@ -246,7 +246,7 @@
             <field name="res_model">my.assignment</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="domain">[
-                ('employee', '=', uid)
+                ('employee.user_id', '=', uid)
                 ]
             </field>
             <field name="context">{'search_default_state': 1}</field>

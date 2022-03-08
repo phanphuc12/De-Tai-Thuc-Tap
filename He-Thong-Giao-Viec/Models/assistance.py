@@ -11,7 +11,7 @@ class Assistance(models.Model):
     name = fields.Char(string='ID', required=True, copy=False, readonly=True, index=True,
                        default=lambda self: _('New'))
     department = fields.Many2one('hr.department', string="Department", required=True)
-    employee = fields.Many2one('res.users', string='Employee', required=True)
+    employee = fields.Many2one('hr.employee', string='Employee', required=True)
     deadline = fields.Datetime(string='Deadline', required=True)
     description = fields.Text(string='Description')
     state = fields.Selection(
@@ -21,7 +21,7 @@ class Assistance(models.Model):
          ('confirm', 'Confirmed')
          ], string='Status', default='draft', readonly=True, tracking=True
     )
-    creator = fields.Many2one('res.users', string='Creator', default=lambda self: self.env.user)
+    creator = fields.Many2one('hr.employee', string="Creator", default=lambda self: self.env.user.employee_id)
     create_date = fields.Date("Create Date", default=fields.Date.today)
     create_time = fields.Char("Create Time",
                               default=lambda self: fields.datetime.now().strftime('%H:%M'))

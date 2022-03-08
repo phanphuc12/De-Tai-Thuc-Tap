@@ -1,17 +1,15 @@
-import datetime
-
 from odoo import api, fields, models, _
-from datetime import datetime
 
 
-class assignment(models.Model):
+class Assignment(models.Model):
     _name = "assignment.s"
     _inherit = ["mail.thread"]
 
     name = fields.Char(string='ID', required=True, copy=False, readonly=True, index=True,
                        default=lambda self: _('New'))
-    department = fields.Many2one('hr.department', string="Department", required=True)
-    employee = fields.Many2one('res.users', string='Employee', required=True)
+    department = fields.Many2one('hr.department', string="Department", required=True,
+                                 default=lambda self: self.env.user.department_id)
+    employee = fields.Many2one('hr.employee', string='Employee', required=True)
     deadline = fields.Datetime(string='Deadline', required=True)
     description = fields.Text(string='Description')
     state = fields.Selection(
@@ -21,7 +19,7 @@ class assignment(models.Model):
          ('confirm', 'Confirmed')
          ], string='Status', default='draft', readonly=True, tracking=True
     )
-    creator = fields.Many2one('res.users', string='Creator', default=lambda self: self.env.user)
+    creator = fields.Many2one('hr.employee', string="Creator", default=lambda self: self.env.user.employee_id)
     project_id = fields.Many2one('project.s', string='Project')
     project_right = fields.Boolean(string='In The Project')
     name_pm = fields.Many2one('hr.employee', related='project_id.name_pm', string='PM Name')
@@ -42,21 +40,12 @@ class assignment(models.Model):
     topic = fields.Many2one('topic.category', string="Topic", required=True)
     type = fields.Char(string='Type', default='1')
 
-    # id_search = fields.Many2one('assignment.s', string='check_id', default="check_id")
-    #
-    # def check_id(self):
-    #     for rec in self:
-    #         rec.id_search = rec.name
-    #         print(rec.id_search)
-
     def action_confirm(self):
-        # print(self)
         vals = {
             'state': 'confirm',
         }
         for rec in self:
             rec.state = 'confirm'
-            # print('check...', vals)
             self.env['my.assignment'].search([('name', '=', rec.name)]).write(vals)
 
     def action_decline(self):
@@ -108,13 +97,13 @@ class assignment(models.Model):
     def create(self, vals):
         if vals.get('name', _('New')) == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code('assignment.s.sequence') or _('New')
-        result = super(assignment, self).create(vals)
+        result = super(Assignment, self).create(vals)
         return result
 
     def write(self, vals):
         for rec in self:
             pr = self.env['my.assignment'].search([('name', '=', rec.name)]).write(vals)
-            ch = super(assignment, self).write(vals)
+            ch = super(Assignment, self).write(vals)
             return pr, ch
 
     @api.onchange('topic')
@@ -126,9 +115,3 @@ class assignment(models.Model):
     def related_department(self):
         for rec in self:
             return {'domain': {'employee': [('department_id', '=', rec.department.id)]}}
-
-
-class AssignmentSearchPanel(models.Model):
-    _name = "assignment.search.panel"
-
-    check_id = fields.Many2one('assignment.s', string='ID')
