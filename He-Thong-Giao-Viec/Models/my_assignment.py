@@ -40,6 +40,14 @@ class MyAssignment(models.Model):
         ('1', 'Assignment'),
         ('2', 'Assistance')
     ], string='type')
+    create_subtask = fields.Boolean(string="Subtask?")
+    subtask = fields.Many2one('assignment.s', string="Parent")
+    subtask_count = fields.Integer(compute='_compute_subtask_count')
+
+    def _compute_subtask_count(self):
+        for rec in self:
+            subtask_count = self.env['assignment.s'].search_count([('subtask', '=', rec.id)])
+            rec.subtask_count = subtask_count
 
     def set_kanban_color(self):
 
