@@ -39,6 +39,14 @@ class Assignment(models.Model):
     ], default='0')
     topic = fields.Many2one('topic.category', string="Topic", required=True)
     type = fields.Char(string='Type', default='1')
+    create_subtask = fields.Boolean(string="Subtask?")
+    subtask = fields.Many2one('assignment.s', string="Parent")
+    subtask_count = fields.Integer(compute='_compute_subtask_count')
+
+    def _compute_subtask_count(self):
+        for rec in self:
+            subtask_count = self.env['assignment.s'].search_count([('subtask', '=', rec.id)])
+            rec.subtask_count = subtask_count
 
     def action_confirm(self):
         vals = {
@@ -73,6 +81,8 @@ class Assignment(models.Model):
             'topic': self.topic.id,
             'creator': self.creator.id,
             'type': self.type,
+            'create_subtask': self.create_subtask,
+            'subtask': self.subtask.id,
 
         }
         for rec in self:
