@@ -54,17 +54,17 @@
                             <field name="creator" readonly="1"/>
                         </group>
                         <group name="inf">
-                            <separator string="Employee" colspan="2"/>
-                            <group>
+                            <group string="Employee">
                                 <field name="department" readonly="1"/>
-                                <field name="employee" readonly="1"/>
+                                <field name="employee"/>
                             </group>
-                            <group>
-                                <field name="deadline" readonly="1"/>
-                                <field name="topic" readonly="1"/>
-                            </group>
-                            <group>
-                                <field name="project_right" attrs="{'invisible':[('type','=','2')]}"/>
+                            <group string="Information">
+                                <field name="topic"/>
+                                <field name="deadline"/>
+                                <field name="project_right"/>
+                                <field name="create_subtask"/>
+                                <field name="subtask" attrs="{'invisible': [('create_subtask','=',False)]}"
+                                       operator="child_of"/>
                             </group>
                         </group>
                         <group name="invisible_field">
@@ -230,7 +230,7 @@
             <field name="res_model">my.assignment</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="domain">[
-                ('employee', '=', uid)
+                ('employee.user_id', '=', uid)
                 ]
             </field>
             <field name="context">{'search_default_state': 1}</field>
