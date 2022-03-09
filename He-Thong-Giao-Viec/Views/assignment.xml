@@ -58,24 +58,27 @@
                         </div>
                         <group>
                             <field name="creator" readonly="1"/>
+                            <field name="subtask_count" readonly="1"/>
                         </group>
                         <group name="inf">
-                            <separator string="Employee" colspan="2"/>
-                            <group>
+                            <!--                            <separator string="Employee" colspan="2"/>-->
+                            <group string="Employee">
                                 <field name="department" readonly="1"/>
                                 <field name="employee"/>
                             </group>
-                            <group>
+                            <!--                            <separator string="Information" colspan="3"/>-->
+                            <group string="Information">
                                 <field name="topic"/>
                                 <field name="deadline"/>
-                            </group>
-                            <group>
                                 <field name="project_right"/>
+                                <field name="create_subtask"/>
+                                <field name="subtask" attrs="{'invisible': [('create_subtask','=',False)]}"
+                                       operator="child_of"/>
                             </group>
                         </group>
-<!--                        <group name="invisible_field">-->
-<!--                            <field name="creator_user" invisible="1"/>-->
-<!--                        </group>-->
+                        <!--                        <group name="invisible_field">-->
+                        <!--                            <field name="creator_user" invisible="1"/>-->
+                        <!--                        </group>-->
                         <separator string="Attachment" colspan="2"/>
                         <group>
                             <field name="file" filename="file_name"/>
@@ -117,6 +120,7 @@
         <record id="assignment_view_kanban" model="ir.ui.view">
             <field name="name">Assignment Kanban</field>
             <field name="model">assignment.s</field>
+            <field name="priority">1</field>
             <field name="arch" type="xml">
                 <kanban default_group_by="state" group_create="false" quick_create="false"
                         records_draggable="true">
@@ -169,6 +173,11 @@
                                                         <li>
                                                             <a type="delete">Delete</a>
                                                         </li>
+                                                        <li>
+                                                            <a name="%(He-Thong-Giao-Viec.action_subtask_assignment_s)d"
+                                                               type="action">Subtask
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -183,11 +192,13 @@
                                         To:
                                         <field name="employee"/>
                                         <br/>
+                                        Subtask:
+                                        <field name="subtask_count"/>
                                     </div>
                                     <div class="o_kanban_record_bottom">
                                         <div class="oe_kanban_bottom_left">
                                             <field name="priority" widget="priority"/>
-                                            <field name="deadline" widget="italic"/>
+                                            <field name="create_date" widget="italic"/>
                                         </div>
                                         <div class="oe_kanban_bottom_right">
                                             <field name="employee" widget="many2one_avatar_employee"/>
@@ -237,7 +248,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">assignment.s</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="domain">[('creator.user_id', '=', uid)]
+            <field name="domain">[('creator.user_id', '=', uid),('create_subtask','=',False)]
             </field>
             <field name="context">{'search_default_state': 1}</field>
             <field name="help" type="html">
@@ -246,6 +257,26 @@
                 </p>
             </field>
         </record>
+
+        <record id="action_subtask_assignment_s" model="ir.actions.act_window">
+            <field name="name">Subtask</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">assignment.s</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[('subtask','=',active_id),('creator.user_id', '=', uid)]
+            </field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    There are no subtask for this assignment!!!
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="subtask_menu"
+                  name="Assignment Subtask"
+                  action="action_subtask_assignment_s"
+                  sequence="10"/>
 
     </data>
 </odoo>
