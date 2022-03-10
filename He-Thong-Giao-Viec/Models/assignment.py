@@ -56,12 +56,12 @@ class Assignment(models.Model):
             rec.state = 'confirm'
             self.env['my.assignment'].search([('name', '=', rec.name)]).write(vals)
 
-    def action_decline(self):
-        for rec in self:
-            rec.state = 'send'
-            self.env['my.assignment'].search([('name', '=', rec.name)]).write({
-                'state': 'received'
-            })
+    # def action_decline(self):
+    #     for rec in self:
+    #         rec.state = 'send'
+    #         self.env['my.assignment'].search([('name', '=', rec.name)]).write({
+    #             'state': 'received'
+    #         })
 
     def send_assignment(self):
         vals = {
@@ -111,8 +111,27 @@ class Assignment(models.Model):
         return result
 
     def write(self, vals):
+        value = {
+            'description': self.description,
+            'department': self.department.id,
+            'employee': self.employee.id,
+            'deadline': self.deadline,
+            'project_id': self.project_id.id,
+            'project_right': self.project_right,
+            'name_pm': self.name_pm,
+            'start_date': self.start_date,
+            'file': self.file,
+            'file_name': self.file_name,
+            'create_time': self.create_time,
+            'priority': self.priority,
+            'topic': self.topic.id,
+            'creator': self.creator.id,
+            'create_subtask': self.create_subtask,
+            'subtask': self.subtask.id,
+
+        }
         for rec in self:
-            pr = self.env['my.assignment'].search([('name', '=', rec.name)]).write(vals)
+            pr = self.env['my.assignment'].search([('name', '=', rec.name)]).write(value)
             ch = super(Assignment, self).write(vals)
             return pr, ch
 
