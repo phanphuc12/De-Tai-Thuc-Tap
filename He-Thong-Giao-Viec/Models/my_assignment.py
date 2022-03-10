@@ -43,6 +43,7 @@ class MyAssignment(models.Model):
     create_subtask = fields.Boolean(string="Subtask?")
     subtask = fields.Many2one('assignment.s', string="Parent")
     subtask_count = fields.Integer(compute='_compute_subtask_count')
+    reason_decline = fields.Text(string='Reason')
 
     def _compute_subtask_count(self):
         for rec in self:
