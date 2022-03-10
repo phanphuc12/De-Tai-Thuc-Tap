@@ -52,6 +52,8 @@
                         </div>
                         <group>
                             <field name="creator" readonly="1"/>
+                            <field name="reason_decline"/>
+<!--                                               attrs="={'invisible': [('reason_decline','=',False)]}"/>-->
                         </group>
                         <group name="inf">
                             <group string="Employee">
@@ -174,8 +176,6 @@
                                         <br/>
                                         From:
                                         <field name="creator"/>
-                                        <br/>
-
                                     </div>
                                     <div class="o_kanban_record_bottom">
                                         <div class="oe_kanban_bottom_left">
