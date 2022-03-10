@@ -12,9 +12,8 @@
                         <button name="action_confirm" type="object" string="Confirm" class="btn-primary"
                                 attrs="{'invisible': [('state','!=', 'complete'), ('state','!=', 'send')]}"
                                 confirm="Confirm this Assign?"/>
-                        <button name="action_decline" type="object" string="Decline" class="btn-primary"
-                                attrs="{'invisible': [('state','!=', 'complete')]}"
-                                confirm="Decline this Assign?"/>
+                        <button name="%(He-Thong-Giao-Viec.decline_wizard)d" type="action" string="Decline" class="btn-primary"
+                                attrs="{'invisible': [('state','!=', 'complete')]}"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,send,complete,confirm"/>
                     </header>
                     <sheet>
@@ -61,19 +60,17 @@
                             <field name="subtask_count" readonly="1"/>
                         </group>
                         <group name="inf">
-                            <!--                            <separator string="Employee" colspan="2"/>-->
                             <group string="Employee">
                                 <field name="department" readonly="1"/>
                                 <field name="employee"/>
                             </group>
-                            <!--                            <separator string="Information" colspan="3"/>-->
                             <group string="Information">
-                                <field name="topic"/>
-                                <field name="deadline"/>
-                                <field name="project_right"/>
-                                <field name="create_subtask"/>
-                                <field name="subtask" attrs="{'invisible': [('create_subtask','=',False)]}"
-                                       operator="child_of"/>
+                                    <field name="topic"/>
+                                    <field name="deadline"/>
+                                    <field name="project_right"/>
+                                    <field name="create_subtask"/>
+                                    <field name="subtask" attrs="{'invisible': [('create_subtask','=',False)]}"
+                                           operator="child_of"/>
                             </group>
                         </group>
                         <!--                        <group name="invisible_field">-->
