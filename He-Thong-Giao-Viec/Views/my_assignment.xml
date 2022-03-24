@@ -52,21 +52,21 @@
                         </div>
                         <group>
                             <field name="creator" readonly="1"/>
-                            <field name="reason_decline"/>
-<!--                                               attrs="={'invisible': [('reason_decline','=',False)]}"/>-->
+                            <field name="reason_decline"
+                                   attrs="{'invisible': [('reason_decline','=',False)]}" readonly="1"/>
                         </group>
                         <group name="inf">
                             <group string="Employee">
                                 <field name="department" readonly="1"/>
-                                <field name="employee"/>
+                                <field name="employee" readonly="1"/>
                             </group>
                             <group string="Information">
-                                <field name="topic"/>
-                                <field name="deadline"/>
-                                <field name="project_right"/>
-                                <field name="create_subtask"/>
+                                <field name="topic" readonly="1"/>
+                                <field name="deadline" readonly="1"/>
+                                <field name="project_right" readonly="1"/>
+                                <field name="create_subtask" readonly="1"/>
                                 <field name="subtask" attrs="{'invisible': [('create_subtask','=',False)]}"
-                                       operator="child_of"/>
+                                       operator="child_of" readonly="1"/>
                             </group>
                         </group>
                         <group name="invisible_field">
@@ -74,16 +74,16 @@
                         </group>
                         <separator string="Attachment" colspan="2"/>
                         <group>
-                            <field name="file" filename="file_name"/>
+                            <field name="file" filename="file_name" readonly="1"/>
                             <field name="file_name" invisible="1"/>
-                            <field name="description"/>
+                            <field name="description" readonly="1"/>
                         </group>
                         <notebook>
                             <page string="Project" attrs="{'invisible': [('project_right','=',False)]}">
                                 <group>
                                     <separator string="Project" colspan="2"/>
                                     <group>
-                                        <field name="project_id" attrs="{'invisible': [('project_right','=',False)]}"/>
+                                        <field name="project_id" attrs="{'invisible': [('project_right','=',False)]}" readonly="1"/>
                                     </group>
                                     <separator string="Project Information" colspan="2"/>
                                     <group>
@@ -97,6 +97,7 @@
                                 <group>
                                     <field name="reply_file" filename="reply_file_name"/>
                                     <field name="reply_file_name" invisible="1"/>
+                                    <field name="reply_description"/>
                                 </group>
                             </page>
                         </notebook>
@@ -180,7 +181,7 @@
                                     <div class="o_kanban_record_bottom">
                                         <div class="oe_kanban_bottom_left">
                                             <field name="priority" widget="priority"/>
-                                            <field name="deadline" widget="italic"/>
+                                            <strong><field name="deadline" widget="remaining_days"/></strong>
                                         </div>
                                         <div class="oe_kanban_bottom_right">
                                             <field name="creator" widget="many2one_avatar_employee"/>
