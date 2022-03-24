@@ -11,13 +11,13 @@ class Assignment(models.Model):
                                  default=lambda self: self.env.user.department_id)
     employee = fields.Many2one('hr.employee', string='Employee', required=True)
     deadline = fields.Datetime(string='Deadline', required=True)
-    description = fields.Text(string='Description')
+    description = fields.Html(string='Description')
     state = fields.Selection(
         [('draft', 'Draft'),
          ('send', 'Sent'),
          ('complete', 'Completed'),
          ('confirm', 'Confirmed')
-         ], string='Status', default='draft', readonly=True, tracking=True
+         ], string='Status', default='draft', readonly=True, tracking=True, group_expand='_read_group_selection_field'
     )
     creator = fields.Many2one('hr.employee', string="Creator", default=lambda self: self.env.user.employee_id)
     project_id = fields.Many2one('project.s', string='Project')
@@ -31,6 +31,7 @@ class Assignment(models.Model):
     file_name = fields.Char(string="File Name")
     reply_file = fields.Binary(string='Attached Files', tracking=True)
     reply_file_name = fields.Char(string='Reply File Name')
+    reply_description = fields.Html(string='Reply')
     color = fields.Integer('Color Index', compute="set_kanban_color")
     priority = fields.Selection([
         ('0', 'Low'),
@@ -42,6 +43,12 @@ class Assignment(models.Model):
     create_subtask = fields.Boolean(string="Subtask?")
     subtask = fields.Many2one('assignment.s', string="Parent")
     subtask_count = fields.Integer(compute='_compute_subtask_count')
+
+    def name_get(self):
+        res = []
+        for rec in self:
+            res.append((rec.id, '%s - %s' % (('[' + rec.name + ']'), rec.topic.name)))
+        return res
 
     def _compute_subtask_count(self):
         for rec in self:
@@ -55,13 +62,6 @@ class Assignment(models.Model):
         for rec in self:
             rec.state = 'confirm'
             self.env['my.assignment'].search([('name', '=', rec.name)]).write(vals)
-
-    # def action_decline(self):
-    #     for rec in self:
-    #         rec.state = 'send'
-    #         self.env['my.assignment'].search([('name', '=', rec.name)]).write({
-    #             'state': 'received'
-    #         })
 
     def send_assignment(self):
         vals = {
@@ -102,6 +102,10 @@ class Assignment(models.Model):
             else:
                 color = 1
             record.color = color
+
+    @api.model
+    def _read_group_selection_field(self, values, domain, order):
+        return ['draft', 'send', 'complete', 'confirm']
 
     @api.model
     def create(self, vals):
