@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="task_form" model="ir.ui.view">
+            <field name="name">Task form</field>
+            <field name="model">task.management</field>
+            <field name="arch" type="xml">
+                <form string="Tasks">
+                    <header>
+                        <field name="state_id" widget="statusbar" options="{'clickable': '1'}"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Name" class="oe_edit_only"/>
+                            <h1 class="d-flex flex-row justify-content-between">
+                                <field name="name" default_focus="1"/>
+                                <!--                                <field name="priority" widget="priority"/>-->
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="assignment"/>
+                                <field name="sprint"/>
+                            </group>
+                            <group>
+                                <field name="priority"/>
+                                <field name="start_date"/>
+                                <field name="deadline"/>
+                            </group>
+                        </group>
+                        <group name="invisible_field">
+                            <field name="creator" invisible="1"/>
+                        </group>
+                        <notebook>
+                            <page name="description" string="Description">
+                                <field name="description"/>
+                            </page>
+                            <page name="info" string="Information" attrs="{'invisible': [('assignment','=',False)]}">
+                                <field name="topic" readonly="1"/>
+                                <group>
+                                    <group>
+                                        <field name="file" filename="file_name"/>
+                                        <field name="file_name" invisible="1"/>
+                                    </group>
+                                    <group string="Project" attrs="{'invisible': [('project_right','=',False)]}">
+                                        <field name="project_id" readonly="1"/>
+                                        <field name="name_pm" readonly="1"/>
+                                        <field name="project_right" invisible="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="task_view_kanban" model="ir.ui.view">
+            <field name="name">Task Kanban</field>
+            <field name="model">task.management</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state_id">
+                    <field name="name"/>
+                    <field name="color"/>
+                    <progressbar field="priority"
+                                 colors='{"low": "muted", "medium": "warning", "high": "danger"}'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click o_has_icon">
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_top">
+                                        <div class="o_kanban_record_headings">
+                                            <ul>
+                                                <big>
+                                                    <field name="name" widget="bold"/>
+                                                </big>
+                                            </ul>
+                                        </div>
+                                        <div class="oe_kanban_top_right">
+                                            <div class="oe_dropdown_kanban">
+                                                <div class="oe_dropdown_toggle">
+                                                    <i class="fa fa-bars fa-lg" title="Manage" aria-label="manage"/>
+                                                    <ul class="oe_dropdown_menu">
+                                                        <li>
+                                                            <a type="delete">Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div t-attf-class="o_kanban_record_body">
+                                        <field name="start_date"/>
+                                        -
+                                        <field name="deadline"/>
+                                        <br/>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <field name="priority" widget="label_selection"/>
+                                            <field name="deadline" widget="remaining_days"/>
+                                        </div>
+                                        <div class="oe_kanban_bottom_right">
+                                            <ul>
+                                                <li class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                    role="img" id="oe_hr_attendance_status"
+                                                    attrs="{'invisible': [('state_id','!=','done')]}"
+                                                    aria-label="Available" title="Available"
+                                                    style="color: #10FF50;">
+                                                </li>
+                                                <li role="img" id="oe_hr_attendance_status"
+                                                    class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                    attrs="{'invisible': [('state_id','!=','todo')]}"
+                                                    aria-label="Available" title="Available"
+                                                    style="color: #f59042;">
+                                                </li>
+                                                <li role="img" id="oe_hr_attendance_status"
+                                                    class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
+                                                    attrs="{'invisible': [('state_id','!=','doing')]}"
+                                                    aria-label="Available" title="Available"
+                                                    style="color: #0880F7;">
+                                                </li>
+                                                <big>
+                                                    <field name="state_id"/>
+                                                </big>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="task_search" model="ir.ui.view">
+            <field name="name">my.task.search</field>
+            <field name="model">task.management</field>
+            <field name="arch" type="xml">
+                <search string="My Task">
+                    <searchpanel>
+                        <field name="sprint" string="Sprint" select="multi"/>
+                        <field name="priority" string="Priority" select="multi"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+        <record id="task_action" model="ir.actions.act_window">
+            <field name="name">Tasks</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">task.management</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create New Task!!!
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
