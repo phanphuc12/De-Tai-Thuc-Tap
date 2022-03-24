@@ -13,6 +13,12 @@ class Projects(models.Model):
     start_date = fields.Date(string="Start Date", requied=True)
     description = fields.Text(string="Description")
 
+    def name_get(self):
+        res = []
+        for rec in self:
+            res.append((rec.id, '%s - %s' % (('[' + rec.name + ']'), rec.project)))
+        return res
+
     @api.model
     def create(self, vals):
         if vals.get('name', _('New')) == _('New'):
