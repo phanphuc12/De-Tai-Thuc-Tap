@@ -100,8 +100,9 @@
                                   attrs="{'invisible': [('state','!=', 'complete'), ('state','!=', 'confirm')]}">
                                 <separator string="File Attachment" colspan="2"/>
                                 <group>
-                                    <field name="reply_file" filename="reply_file_name"/>
+                                    <field name="reply_file" filename="reply_file_name" readonly="1"/>
                                     <field name="reply_file_name" invisible="1"/>
+                                    <field name="reply_description" readonly="1"/>
                                 </group>
                             </page>
                         </notebook>
@@ -195,7 +196,7 @@
                                     <div class="o_kanban_record_bottom">
                                         <div class="oe_kanban_bottom_left">
                                             <field name="priority" widget="priority"/>
-                                            <field name="create_date" widget="italic"/>
+                                            <strong><field name="deadline" widget="remaining_days"/></strong>
                                         </div>
                                         <div class="oe_kanban_bottom_right">
                                             <field name="employee" widget="many2one_avatar_employee"/>
@@ -270,10 +271,10 @@
             </field>
         </record>
 
-        <menuitem id="subtask_menu"
-                  name="Assignment Subtask"
-                  action="action_subtask_assignment_s"
-                  sequence="10"/>
+<!--        <menuitem id="subtask_assignment_menu"-->
+<!--                  name="Assignment Subtask"-->
+<!--                  action="action_subtask_assignment_s"-->
+<!--                  sequence="10"/>-->
 
     </data>
 </odoo>
