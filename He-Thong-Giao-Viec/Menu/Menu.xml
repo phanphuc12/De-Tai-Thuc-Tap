@@ -30,6 +30,21 @@
                   action="action_assistance_s"
                   parent="menu_view"
                   sequence="10"/>
+        <!--Task-->
+        <menuitem id="action_task_menu_bar"
+                  name="Task"
+                  parent="menu_view"
+                  sequence="10"/>
+        <menuitem id="action_task_menu"
+                  name="My Tasks"
+                  action="task_action"
+                  parent="action_task_menu_bar"
+                  sequence="11"/>
+        <menuitem id="action_sprint_menu"
+                  name="Sprints"
+                  action="sprint_action"
+                  parent="action_task_menu_bar"
+                  sequence="12"/>
         <!--employee-->
         <menuitem id="action_employee_tab_menu"
                   name="Employee"
