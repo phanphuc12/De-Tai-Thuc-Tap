@@ -6,3 +6,5 @@ from . import users
 from . import projects
 from . import topic_categories
 from . import assistance
+from . import my_task
+from . import sprint
