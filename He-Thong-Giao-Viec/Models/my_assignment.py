@@ -14,12 +14,13 @@ class MyAssignment(models.Model):
     create_date = fields.Date("Create Date", default=fields.Date.today)
     create_time = fields.Char("Create Time",
                               default=lambda self: fields.datetime.now().strftime('%H:%M'))
-    description = fields.Text(string='Description')
+    description = fields.Html(string='Description')
     state = fields.Selection(
         [('received', 'Received'),
          ('complete', 'Completed'),
          ('confirm', 'Confirmed')
-         ], string='Status', default='received', readonly=True, tracking=True)
+         ], string='Status', default='received', readonly=True, tracking=True,
+        group_expand='_read_group_selection_field')
     creator = fields.Many2one('hr.employee', string="Creator", readonly=True)
     project_id = fields.Many2one('project.s', string='Project')
     project_right = fields.Boolean(string='In The Project')
@@ -29,6 +30,7 @@ class MyAssignment(models.Model):
     file_name = fields.Char(string="File Name")
     reply_file = fields.Binary(string='Attached Files', tracking=True)
     reply_file_name = fields.Char(string='Reply File Name')
+    reply_description = fields.Html(string="Reply")
     color = fields.Integer('Color Index', compute="set_kanban_color")
     priority = fields.Selection([
         ('0', 'Low'),
@@ -80,3 +82,7 @@ class MyAssignment(models.Model):
                     'reply_file': self.reply_file,
                     'reply_file_name': self.reply_file_name,
                 })
+
+    @api.model
+    def _read_group_selection_field(self, values, domain, order):
+        return ['received', 'complete', 'confirm']
