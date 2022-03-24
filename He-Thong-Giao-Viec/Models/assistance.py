@@ -13,7 +13,7 @@ class Assistance(models.Model):
     department = fields.Many2one('hr.department', string="Department", required=True)
     employee = fields.Many2one('hr.employee', string='Employee', required=True)
     deadline = fields.Datetime(string='Deadline', required=True)
-    description = fields.Text(string='Description')
+    description = fields.Html(string='Description')
     state = fields.Selection(
         [('draft', 'Draft'),
          ('send', 'Sent'),
@@ -29,6 +29,7 @@ class Assistance(models.Model):
     file_name = fields.Char(string="File Name")
     reply_file = fields.Binary(string='Attached Files', tracking=True)
     reply_file_name = fields.Char(string='Reply File Name')
+    reply_description = fields.Html(string='Reply')
     color = fields.Integer('Color Index', compute="set_kanban_color")
     priority = fields.Selection([
         ('0', 'Low'),
@@ -40,6 +41,12 @@ class Assistance(models.Model):
     create_subtask = fields.Boolean(string="Subtask?")
     subtask = fields.Many2one('assistance.s', string="Parent")
     subtask_count = fields.Integer(compute='_compute_subtask_count')
+
+    def name_get(self):
+        res = []
+        for rec in self:
+            res.append((rec.id, '%s - %s' % (('[' + rec.name + ']'), rec.topic.name)))
+        return res
 
     def _compute_subtask_count(self):
         for rec in self:
