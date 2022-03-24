@@ -32,7 +32,7 @@
             <field name="name">topic tree</field>
             <field name="model">topic.category</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree expand="1">
                     <field name="name"/>
                 </tree>
             </field>
