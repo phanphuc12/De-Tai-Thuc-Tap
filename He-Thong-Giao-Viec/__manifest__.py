@@ -1,9 +1,10 @@
 {
     'name': 'Assignment System',
     'version': '1.0',
-    'summary': 'He Thong Giao Viec',
+    'summary': 'Assignment, Task.',
     'sequence': -10,
-    'description': """He Thong Giao Viec""",
+    'description': """This module made by Phan Bao Phuc.'
+               'Contact: baophuc12k@gmail.com""",
     'category': 'Human Resources',
     'license': 'LGPL-3',
     'depends': [
@@ -30,6 +31,8 @@
         'Views/topic_categories.xml',
         'Views/templates.xml',
         'Views/assistance.xml',
+        'Views/my_task.xml',
+        'Views/sprint.xml',
         # Menu
         'Menu/Menu.xml'
     ],
