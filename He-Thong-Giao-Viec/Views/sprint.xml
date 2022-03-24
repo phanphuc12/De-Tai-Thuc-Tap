@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="sprint_form" model="ir.ui.view">
+            <field name="name">sprint form</field>
+            <field name="model">sprint.management</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" placeholder="Sprint name......"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sprint_tree" model="ir.ui.view">
+            <field name="name">sprint tree</field>
+            <field name="model">sprint.management</field>
+            <field name="arch" type="xml">
+                <tree expand="1">
+                    <field name="name"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sprint_action" model="ir.actions.act_window">
+            <field name="name">Sprints</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sprint.management</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create New Sprint!!!
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>
