@@ -1,4 +1,4 @@
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 
 
 class MyTask(models.Model):
@@ -28,6 +28,18 @@ class MyTask(models.Model):
         ('medium', 'Medium'),
         ('high', 'High'),
     ], default='low', string='Priority', group_expand='_read_group_selection_priority')
+
+    def set_priority_low(self):
+        for rec in self:
+            rec.priority = 'low'
+
+    def set_priority_medium(self):
+        for rec in self:
+            rec.priority = 'medium'
+
+    def set_priority_high(self):
+        for rec in self:
+            rec.priority = 'high'
 
     def set_kanban_color(self):
         for record in self:
