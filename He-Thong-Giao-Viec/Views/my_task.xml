@@ -97,7 +97,22 @@
                                     </div>
                                     <div class="o_kanban_record_bottom">
                                         <div class="oe_kanban_bottom_left">
-                                            <field name="priority" widget="label_selection"/>
+                                            <div class="oe_dropdown_kanban">
+                                                <div class="oe_dropdown_toggle">
+                                                    <field name="priority" widget="label_selection"/>
+                                                    <ul class="oe_dropdown_menu">
+                                                        <li>
+                                                            <a name="set_priority_low" type="object">Low</a>
+                                                        </li>
+                                                        <li>
+                                                            <a name="set_priority_medium" type="object">Medium</a>
+                                                        </li>
+                                                        <li>
+                                                            <a name="set_priority_high" type="object">High</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                             <field name="deadline" widget="remaining_days"/>
                                         </div>
                                         <div class="oe_kanban_bottom_right">
@@ -120,9 +135,7 @@
                                                     aria-label="Available" title="Available"
                                                     style="color: #0880F7;">
                                                 </li>
-                                                <big>
-                                                    <field name="state_id"/>
-                                                </big>
+                                                <field name="state_id"/>
                                             </ul>
                                         </div>
                                     </div>
