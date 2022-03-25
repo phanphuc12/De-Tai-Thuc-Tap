@@ -2,7 +2,7 @@
     'name': 'Assignment System',
     'version': '1.0',
     'summary': 'Assignment, Task.',
-    'sequence': -10,
+    'sequence': -9,
     'description': """This module made by Phan Bao Phuc.'
                'Contact: baophuc12k@gmail.com""",
     'category': 'Human Resources',
