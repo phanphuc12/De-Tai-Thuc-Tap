@@ -12,7 +12,8 @@
                         <button name="action_confirm" type="object" string="Confirm" class="btn-primary"
                                 attrs="{'invisible': [('state','!=', 'complete'), ('state','!=', 'send')]}"
                                 confirm="Confirm this Assign?"/>
-                        <button name="%(He-Thong-Giao-Viec.decline_wizard)d" type="action" string="Decline" class="btn-primary"
+                        <button name="%(He-Thong-Giao-Viec.decline_wizard)d" type="action" string="Decline"
+                                class="btn-primary"
                                 attrs="{'invisible': [('state','!=', 'complete')]}"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,send,complete,confirm"/>
                     </header>
@@ -65,12 +66,12 @@
                                 <field name="employee"/>
                             </group>
                             <group string="Information">
-                                    <field name="topic"/>
-                                    <field name="deadline"/>
-                                    <field name="project_right"/>
-                                    <field name="create_subtask"/>
-                                    <field name="subtask" attrs="{'invisible': [('create_subtask','=',False)]}"
-                                           operator="child_of"/>
+                                <field name="topic"/>
+                                <field name="deadline"/>
+                                <field name="project_right"/>
+                                <field name="create_subtask"/>
+                                <field name="subtask" attrs="{'invisible': [('create_subtask','=',False)]}"
+                                       operator="child_of"/>
                             </group>
                         </group>
                         <!--                        <group name="invisible_field">-->
@@ -171,34 +172,31 @@
                                                         <li>
                                                             <a type="delete">Delete</a>
                                                         </li>
-                                                        <li>
-                                                            <a name="%(He-Thong-Giao-Viec.action_subtask_assignment_s)d"
-                                                               type="action">Subtask
-                                                            </a>
-                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div t-attf-class="o_kanban_record_body">
-
                                         <strong>
                                             <field name="topic"/>
                                         </strong>
                                         <br/>
                                         To:
                                         <field name="employee"/>
-                                        <br/>
-                                        Subtask:
-                                        <field name="subtask_count"/>
                                     </div>
                                     <div class="o_kanban_record_bottom">
                                         <div class="oe_kanban_bottom_left">
                                             <field name="priority" widget="priority"/>
-                                            <strong><field name="deadline" widget="remaining_days"/></strong>
+                                            <strong>
+                                                <field name="deadline" widget="remaining_days"/>
+                                            </strong>
                                         </div>
                                         <div class="oe_kanban_bottom_right">
+                                            <a name="%(He-Thong-Giao-Viec.action_subtask_assignment_s)d"
+                                               type="action" attrs="{'invisible': [('subtask_count','=',0)]}">
+                                                <field name="subtask_count" widget="label_selection"/>
+                                            </a>
                                             <field name="employee" widget="many2one_avatar_employee"/>
                                         </div>
                                     </div>
@@ -271,10 +269,10 @@
             </field>
         </record>
 
-<!--        <menuitem id="subtask_assignment_menu"-->
-<!--                  name="Assignment Subtask"-->
-<!--                  action="action_subtask_assignment_s"-->
-<!--                  sequence="10"/>-->
+        <!--        <menuitem id="subtask_assignment_menu"-->
+        <!--                  name="Assignment Subtask"-->
+        <!--                  action="action_subtask_assignment_s"-->
+        <!--                  sequence="10"/>-->
 
     </data>
 </odoo>
