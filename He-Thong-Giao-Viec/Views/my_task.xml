@@ -25,7 +25,7 @@
                             <group>
                                 <field name="priority"/>
                                 <field name="start_date"/>
-                                <field name="deadline"/>
+                                <field name="end_date"/>
                             </group>
                         </group>
                         <group name="invisible_field">
@@ -36,9 +36,9 @@
                                 <field name="description"/>
                             </page>
                             <page name="info" string="Information" attrs="{'invisible': [('assignment','=',False)]}">
-                                <field name="topic" readonly="1"/>
                                 <group>
-                                    <group>
+                                    <group string="Topic">
+                                        <field name="topic" readonly="1"/>
                                         <field name="file" filename="file_name"/>
                                         <field name="file_name" invisible="1"/>
                                     </group>
@@ -46,6 +46,9 @@
                                         <field name="project_id" readonly="1"/>
                                         <field name="name_pm" readonly="1"/>
                                         <field name="project_right" invisible="1"/>
+                                    </group>
+                                    <group string="Deadline">
+                                        <field name="deadline"/>
                                     </group>
                                 </group>
                             </page>
@@ -92,7 +95,7 @@
                                     <div t-attf-class="o_kanban_record_body">
                                         <field name="start_date"/>
                                         -
-                                        <field name="deadline"/>
+                                        <field name="end_date"/>
                                         <br/>
                                     </div>
                                     <div class="o_kanban_record_bottom">
@@ -113,7 +116,7 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <field name="deadline" widget="remaining_days"/>
+                                            <field name="end_date" widget="remaining_days"/>
                                         </div>
                                         <div class="oe_kanban_bottom_right">
                                             <ul>
