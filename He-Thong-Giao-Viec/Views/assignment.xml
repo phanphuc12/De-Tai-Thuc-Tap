@@ -19,6 +19,16 @@
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
+                            <button name="%(He-Thong-Giao-Viec.action_subtask_assignment_s)d" icon="fa-sitemap"
+                                    id="subtask_button" class="oe_stat_button">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="subtask_count"/>
+                                        <br/>
+                                    </span>
+                                    Subtask
+                                </div>
+                            </button>
                             <button id="hr_presence_button" class="oe_stat_button" disabled="1">
                                 <div role="img" id="oe_hr_attendance_status"
                                      class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
@@ -216,6 +226,7 @@
                       decoration-success="state == 'confirm'" decoration-warning="state == 'send'"
                       decoration-info="state == 'complete'" expand="1">
                     <field name="name" widget="bold"/>
+                    <field name="topic"/>
                     <field name="employee"/>
                     <field name="deadline"/>
                     <field name="state"/>
@@ -231,10 +242,6 @@
                     <group expand="1" string="group by">
                         <filter string="Status" name="state" context="{'group_by':'state'}"/>
                     </group>
-                    <!--                    <searchpanel>-->
-                    <!--                        <field name="id_search" enable_counters="1"/>-->
-                    <!--                        &lt;!&ndash;                        <field name="department_id" icon="fa-users" enable_counters="1"/>&ndash;&gt;-->
-                    <!--                    </searchpanel>-->
                 </search>
             </field>
         </record>
