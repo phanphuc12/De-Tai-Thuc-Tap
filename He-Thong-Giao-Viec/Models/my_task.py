@@ -6,7 +6,7 @@ class MyTask(models.Model):
 
     name = fields.Char('Name', required=True)
     start_date = fields.Date('Start Date', required=True)
-    deadline = fields.Date('End Date', required=True)
+    end_date = fields.Date('End Date', required=True)
     description = fields.Html('Description')
     assignment = fields.Many2one('assignment.s', string='Related Work')
     creator = fields.Many2one('hr.employee', default=lambda self: self.env.user.employee_id)
@@ -15,7 +15,8 @@ class MyTask(models.Model):
     name_pm = fields.Many2one('hr.employee', string='PM Name', related='assignment.name_pm')
     file = fields.Binary(string='Attached Files', related='assignment.file')
     file_name = fields.Char(string="File Name", related='assignment.file_name')
-    topic = fields.Many2one('topic.category', string="Topic", required=True, related='assignment.topic')
+    topic = fields.Many2one('topic.category', string="Topic", related='assignment.topic')
+    deadline = fields.Datetime(string='Deadline', related='assignment.deadline')
     state_id = fields.Selection([
         ('todo', 'To Do'),
         ('doing', 'Doing'),
