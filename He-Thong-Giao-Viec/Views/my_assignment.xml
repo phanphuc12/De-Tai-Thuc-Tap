@@ -220,6 +220,7 @@
                     </group>
                     <searchpanel>
                         <field name="type"/>
+                        <field name="state" select="multi"/>
                     </searchpanel>
                 </search>
             </field>
