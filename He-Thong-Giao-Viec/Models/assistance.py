@@ -19,7 +19,7 @@ class Assistance(models.Model):
          ('send', 'Sent'),
          ('complete', 'Completed'),
          ('confirm', 'Confirmed')
-         ], string='Status', default='draft', readonly=True, tracking=True
+         ], string='Status', default='draft', readonly=True, tracking=True, group_expand='_read_group_selection_field'
     )
     creator = fields.Many2one('hr.employee', string="Creator", default=lambda self: self.env.user.employee_id)
     create_date = fields.Date("Create Date", default=fields.Date.today)
@@ -103,6 +103,10 @@ class Assistance(models.Model):
             record.color = color
 
     @api.model
+    def _read_group_selection_field(self, values, domain, order):
+        return ['draft', 'send', 'complete', 'confirm']
+
+    @api.model
     def create(self, vals):
         if vals.get('name', _('New')) == _('New'):
             vals['name'] = self.env['ir.sequence'].next_by_code('assistance.s.sequence') or _('New')
@@ -115,10 +119,10 @@ class Assistance(models.Model):
             ch = super(Assistance, self).write(vals)
             return pr, ch
 
-    @api.onchange('topic')
+    @api.onchange('department')
     def assistance_only(self):
         for rec in self:
-            return {'domain': {'topic': [('type', '=', rec.type)]}}
+            return {'domain': {'topic': [('type', '=', rec.type), ('department', '=', rec.department.id)]}}
 
     @api.onchange('department')
     def related_department(self):
