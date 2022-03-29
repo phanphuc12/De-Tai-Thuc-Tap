@@ -19,6 +19,16 @@
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">
+                            <button name="%(He-Thong-Giao-Viec.action_subtask_assistance_s)d" icon="fa-sitemap"
+                                    id="subtask_button" class="oe_stat_button">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="subtask_count"/>
+                                        <br/>
+                                    </span>
+                                    Subtask
+                                </div>
+                            </button>
                             <button id="hr_presence_button" class="oe_stat_button" disabled="1">
                                 <div role="img" id="oe_hr_attendance_status"
                                      class="fa fa-fw fa-circle o_button_icon oe_hr_attendance_status_green"
@@ -175,9 +185,6 @@
                                         <br/>
                                         To:
                                         <field name="employee"/>
-                                        <br/>
-                                        Subtask:
-                                        <field name="subtask_count"/>
                                     </div>
                                     <div class="o_kanban_record_bottom">
                                         <div class="oe_kanban_bottom_left">
@@ -185,6 +192,10 @@
                                             <strong><field name="deadline" widget="remaining_days"/></strong>
                                         </div>
                                         <div class="oe_kanban_bottom_right">
+                                            <a name="%(He-Thong-Giao-Viec.action_subtask_assistance_s)d"
+                                               type="action" attrs="{'invisible': [('subtask_count','=',0)]}">
+                                                <field name="subtask_count" widget="label_selection"/>
+                                            </a>
                                             <field name="employee" widget="many2one_avatar_employee"/>
                                         </div>
                                     </div>
@@ -204,6 +215,7 @@
                       decoration-success="state == 'confirm'" decoration-warning="state == 'send'"
                       decoration-info="state == 'complete'" expand="1">
                     <field name="name" widget="bold"/>
+                    <field name="topic"/>
                     <field name="employee"/>
                     <field name="deadline"/>
                     <field name="state"/>
