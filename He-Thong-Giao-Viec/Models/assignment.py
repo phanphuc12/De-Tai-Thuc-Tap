@@ -142,7 +142,7 @@ class Assignment(models.Model):
     @api.onchange('topic')
     def assignment_only(self):
         for rec in self:
-            return {'domain': {'topic': [('type', '=', rec.type)]}}
+            return {'domain': {'topic': [('type', '=', rec.type), ('department', '=', rec.department.id)]}}
 
     @api.onchange('department')
     def related_department(self):
