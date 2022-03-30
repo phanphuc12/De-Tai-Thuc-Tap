@@ -58,15 +58,18 @@ class Assistance(models.Model):
             'state': 'confirm',
         }
         for rec in self:
-            rec.state = 'confirm'
             self.env['my.assignment'].search([('name', '=', rec.name)]).write(vals)
-
-    def action_decline(self):
-        for rec in self:
-            rec.state = 'send'
-            self.env['my.assignment'].search([('name', '=', rec.name)]).write({
-                'state': 'received'
-            })
+        self.sudo().write({
+            'state': 'confirm'
+        })
+        return {
+            'effect': {
+                'fadeout': 'slow',
+                'message': 'The assistance has been confirmed',
+                'type': 'rainbow_man',
+                'img_url': 'He-Thong-Giao-Viec/static/img/confirmed.png'
+            }
+        }
 
     def send_assistance(self):
         vals = {
@@ -84,9 +87,18 @@ class Assistance(models.Model):
             'type': self.type,
 
         }
-        for rec in self:
-            rec.state = 'send'
         self.env['my.assignment'].create(vals)
+        self.sudo().write({
+            'state': 'send'
+        })
+        return {
+            'effect': {
+                'fadeout': 'slow',
+                'message': 'The assistance has been sent',
+                'type': 'rainbow_man',
+                'img_url': 'He-Thong-Giao-Viec/static/img/sent.png'
+            }
+        }
 
     def set_kanban_color(self):
         for record in self:
@@ -114,8 +126,23 @@ class Assistance(models.Model):
         return result
 
     def write(self, vals):
+        value = {
+            'description': self.description,
+            'department': self.department.id,
+            'employee': self.employee.id,
+            'deadline': self.deadline,
+            'file': self.file,
+            'file_name': self.file_name,
+            'create_time': self.create_time,
+            'priority': self.priority,
+            'topic': self.topic.id,
+            'creator': self.creator.id,
+            'create_subtask': self.create_subtask,
+            'subtask': self.subtask.id,
+
+        }
         for rec in self:
-            pr = self.env['my.assignment'].search([('name', '=', rec.name)]).write(vals)
+            pr = self.env['my.assignment'].search([('name', '=', rec.name)]).write(value)
             ch = super(Assistance, self).write(vals)
             return pr, ch
 
