@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding ="utf-8"?>
+<odoo>
+    <record id="deny_form_assignment" model="ir.ui.view">
+        <field name="name">deny.wizard.form</field>
+        <field name="model">deny.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Deny Reason">
+                <group>
+                    <field name="reason_deny"/>
+                </group>
+                <footer>
+                    <button name="action_deny_assignment" string="Send" type="object" class="btn-primary"
+                            confirm="Deny this Assign?"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="deny_form_assistance" model="ir.ui.view">
+        <field name="name">deny.wizard.form2</field>
+        <field name="model">deny.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Deny Reason">
+                <group>
+                    <field name="reason_deny"/>
+                </group>
+                <footer>
+                    <button name="action_deny_assistance" string="Send" type="object" class="btn-primary"
+                            confirm="Deny this Assign?"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="deny_wizard_assignment" model="ir.actions.act_window">
+        <field name="name">Deny</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">deny.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="deny_form_assignment"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="deny_wizard_assistance" model="ir.actions.act_window">
+        <field name="name">Deny2</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">deny.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="deny_form_assistance"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
