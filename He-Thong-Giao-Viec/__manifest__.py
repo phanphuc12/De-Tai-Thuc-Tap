@@ -20,7 +20,7 @@
         # Data
         'Data/sequence.xml',
         # Wizards
-        'Wizards/decline.xml',
+        'Wizards/deny.xml',
         # Views
         'Views/employees.xml',
         'Views/department.xml',
