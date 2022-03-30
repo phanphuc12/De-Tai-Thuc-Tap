@@ -60,8 +60,18 @@ class Assignment(models.Model):
             'state': 'confirm',
         }
         for rec in self:
-            rec.state = 'confirm'
             self.env['my.assignment'].search([('name', '=', rec.name)]).write(vals)
+        self.sudo().write({
+            'state': 'confirm'
+        })
+        return {
+            'effect': {
+                'fadeout': 'slow',
+                'message': 'The assignment has been confirmed',
+                'type': 'rainbow_man',
+                'img_url': 'He-Thong-Giao-Viec/static/img/confirmed.png'
+            }
+        }
 
     def send_assignment(self):
         vals = {
@@ -85,9 +95,29 @@ class Assignment(models.Model):
             'subtask': self.subtask.id,
 
         }
-        for rec in self:
-            rec.state = 'send'
         self.env['my.assignment'].create(vals)
+
+        # message = {
+        #     'type': 'ir.actions.client',
+        #     'tag': 'display_notification',
+        #     'params': {
+        #         'title': _('Hello!'),
+        #         'message': 'You received assignment name: ' + self.name,
+        #         'sticky': False,
+        #     }
+        # }
+        # return message
+        self.sudo().write({
+            'state': 'send'
+        })
+        return {
+            'effect': {
+                'fadeout': 'slow',
+                'message': 'The assignment has been sent',
+                'type': 'rainbow_man',
+                'img_url': 'He-Thong-Giao-Viec/static/img/sent.png'
+            }
+        }
 
     def set_kanban_color(self):
         for record in self:
