@@ -8,6 +8,7 @@ class Sprint(models.Model):
     start_date = fields.Date('Start Date', required=True)
     end_date = fields.Date('End Date', required=True)
     description = fields.Text('description', required=False)
+    creator = fields.Many2one('hr.employee', default=lambda self: self.env.user.employee_id)
 
     def name_get(self):
         res = []
