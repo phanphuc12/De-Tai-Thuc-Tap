@@ -12,7 +12,7 @@
                         <button name="action_confirm" type="object" string="Confirm" class="btn-primary"
                                 attrs="{'invisible': [('state','!=', 'complete'), ('state','!=', 'send')]}"
                                 confirm="Confirm this Assign?"/>
-                        <button name="%(He-Thong-Giao-Viec.decline_wizard)d" type="action" string="Decline"
+                        <button name="%(He-Thong-Giao-Viec.deny_wizard_assignment)d" type="action" string="Deny"
                                 class="btn-primary"
                                 attrs="{'invisible': [('state','!=', 'complete')]}"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,send,complete,confirm"/>
