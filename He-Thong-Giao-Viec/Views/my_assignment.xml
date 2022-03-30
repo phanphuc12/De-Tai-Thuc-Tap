@@ -52,8 +52,8 @@
                         </div>
                         <group>
                             <field name="creator" readonly="1"/>
-                            <field name="reason_decline"
-                                   attrs="{'invisible': [('reason_decline','=',False)]}" readonly="1"/>
+                            <field name="reason_deny"
+                                   attrs="{'invisible': [('reason_deny','=',False)]}" readonly="1"/>
                         </group>
                         <group name="inf">
                             <group string="Employee">
