@@ -45,7 +45,7 @@ class MyAssignment(models.Model):
     create_subtask = fields.Boolean(string="Subtask?")
     subtask = fields.Many2one('assignment.s', string="Parent")
     subtask_count = fields.Integer(compute='_compute_subtask_count')
-    reason_decline = fields.Text(string='Reason')
+    reason_deny = fields.Text(string='Reason')
 
     def _compute_subtask_count(self):
         for rec in self:
@@ -69,7 +69,6 @@ class MyAssignment(models.Model):
 
     def action_complete(self):
         for rec in self:
-            rec.state = 'complete'
             if rec.type == '1':
                 self.env['assignment.s'].search([('name', '=', self.name)]).write({
                     'state': 'complete',
@@ -82,6 +81,17 @@ class MyAssignment(models.Model):
                     'reply_file': self.reply_file,
                     'reply_file_name': self.reply_file_name,
                 })
+        self.sudo().write({
+            'state': 'complete'
+        })
+        return {
+            'effect': {
+                'fadeout': 'slow',
+                'message': 'The result has been sent',
+                'type': 'rainbow_man',
+                'img_url': 'He-Thong-Giao-Viec/static/img/complete.png'
+            }
+        }
 
     @api.model
     def _read_group_selection_field(self, values, domain, order):
