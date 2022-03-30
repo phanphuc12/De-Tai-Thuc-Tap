@@ -4,7 +4,7 @@
         <record id="mail.menu_root_discuss" model="ir.ui.menu">
             <field name="sequence" eval="45"/>
         </record>
-        <menuitem id="menu_view" name="Assignment System " sequence="1"/>
+        <menuitem id="menu_view" name="ASM " sequence="1"/>
 
         <menuitem id="action_menu_view"
                   name="Assignment"
