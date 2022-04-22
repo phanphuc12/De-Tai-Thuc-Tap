@@ -11,6 +11,7 @@
         'hr',
         'mail',
         'base',
+        'board',
 
     ],
     'data': [
@@ -33,6 +34,10 @@
         'Views/assistance.xml',
         'Views/my_task.xml',
         'Views/sprint.xml',
+        'Views/dashboard.xml',
+        # reports
+        'Reports/assignment_report.xml',
+        'Reports/report.xml',
         # Menu
         'Menu/Menu.xml'
     ],
