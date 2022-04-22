@@ -27,5 +27,4 @@ class DenyWizard(models.TransientModel):
         change_status = self.env['assistance.s'].browse(self.env.context.get('active_id')).write({
             'state': 'send',
         })
-
         return send_reason, change_status
