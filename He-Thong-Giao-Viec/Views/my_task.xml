@@ -163,11 +163,22 @@
             </field>
         </record>
 
+        <record id="my_task_calendar" model="ir.ui.view">
+            <field name="name">my.calendar</field>
+            <field name="model">task.management</field>
+            <field name="arch" type="xml">
+                <calendar date_start="start_date" date_stop="end_date" string="My Calendar" color="color" mode="month">
+                    <field name="name"/>
+                    <field name="state_id" filters="1"/>
+                </calendar>
+            </field>
+        </record>
+
         <record id="task_action" model="ir.actions.act_window">
             <field name="name">Tasks</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">task.management</field>
-            <field name="view_mode">kanban,form</field>
+            <field name="view_mode">kanban,form,calendar</field>
             <field name="domain">[('creator.user_id','=',uid)]</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
