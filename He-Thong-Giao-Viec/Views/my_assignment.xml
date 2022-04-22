@@ -47,13 +47,18 @@
                         <div class="oe_title">
                             <h1 class="d-flex flex-row justify-content-between">
                                 <field name="name" readonly="1" default_focus="1"/>
-                                <field name="priority" widget="priority" readonly="1"/>
                             </h1>
                         </div>
                         <group>
-                            <field name="creator" readonly="1"/>
-                            <field name="reason_deny"
-                                   attrs="{'invisible': [('reason_deny','=',False)]}" readonly="1"/>
+                            <group>
+                                <field name="creator" readonly="1"/>
+                                <field name="reason_deny"
+                                       attrs="{'invisible': [('reason_deny','=',False)]}" readonly="1"/>
+                                <field name="priority" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="rating" widget="priority" readonly="1"/>
+                            </group>
                         </group>
                         <group name="inf">
                             <group string="Employee">
@@ -83,7 +88,8 @@
                                 <group>
                                     <separator string="Project" colspan="2"/>
                                     <group>
-                                        <field name="project_id" attrs="{'invisible': [('project_right','=',False)]}" readonly="1"/>
+                                        <field name="project_id" attrs="{'invisible': [('project_right','=',False)]}"
+                                               readonly="1"/>
                                     </group>
                                     <separator string="Project Information" colspan="2"/>
                                     <group>
@@ -180,8 +186,10 @@
                                     </div>
                                     <div class="o_kanban_record_bottom">
                                         <div class="oe_kanban_bottom_left">
-                                            <field name="priority" widget="priority"/>
-                                            <strong><field name="deadline" widget="remaining_days"/></strong>
+                                            <field name="rating" widget="priority" readonly="1"/>
+                                            <strong>
+                                                <field name="deadline" widget="remaining_days"/>
+                                            </strong>
                                         </div>
                                         <div class="oe_kanban_bottom_right">
                                             <field name="creator" widget="many2one_avatar_employee"/>
@@ -221,6 +229,7 @@
                     <searchpanel>
                         <field name="type"/>
                         <field name="state" select="multi"/>
+                        <field name="priority" select="multi"/>
                     </searchpanel>
                 </search>
             </field>
@@ -242,6 +251,7 @@
                 </p>
             </field>
         </record>
+
         <record id="action_menu" model="ir.actions.act_window">
             <field name="name">My Assignment</field>
             <field name="type">ir.actions.act_window</field>
