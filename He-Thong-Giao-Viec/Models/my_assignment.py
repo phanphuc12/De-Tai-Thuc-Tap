@@ -46,6 +46,12 @@ class MyAssignment(models.Model):
     subtask = fields.Many2one('assignment.s', string="Parent")
     subtask_count = fields.Integer(compute='_compute_subtask_count')
     reason_deny = fields.Text(string='Reason')
+    rating = fields.Selection([
+        ('no', 'Not Rating'),
+        ('bad', 'Bad'),
+        ('good', 'Good'),
+        ('perfect', 'Perfect')
+    ], default='no')
 
     def _compute_subtask_count(self):
         for rec in self:
@@ -53,16 +59,13 @@ class MyAssignment(models.Model):
             rec.subtask_count = subtask_count
 
     def set_kanban_color(self):
-
         for record in self:
-            if record.state == 'draft':
+            if record.priority == '0':
                 color = 0
-            elif record.state == 'received':
-                color = 3
-            elif record.state == 'complete':
-                color = 4
-            elif record.state == 'confirm':
-                color = 10
+            elif record.priority == '1':
+                color = 2
+            elif record.priority == '2':
+                color = 1
             else:
                 color = 1
             record.color = color
