@@ -20,7 +20,7 @@
                     <sheet>
                         <div class="oe_button_box" name="button_box">
                             <button name="%(He-Thong-Giao-Viec.action_subtask_assignment_s)d" icon="fa-sitemap"
-                                    id="subtask_button" class="oe_stat_button">
+                                    id="subtask_button" class="oe_stat_button" type="action">
                                 <div class="o_stat_info">
                                     <span class="o_stat_value">
                                         <field name="subtask_count"/>
@@ -63,12 +63,17 @@
                         <div class="oe_title">
                             <h1 class="d-flex flex-row justify-content-between">
                                 <field name="name" readonly="1" default_focus="1"/>
-                                <field name="priority" widget="priority"/>
                             </h1>
                         </div>
                         <group>
-                            <field name="creator" readonly="1"/>
-                            <field name="subtask_count" readonly="1"/>
+                            <group>
+                                <field name="creator" readonly="1"/>
+                                <field name="subtask_count" readonly="1"/>
+                                <field name="priority"/>
+                            </group>
+                            <group>
+                                <field name="rating" widget="priority"/>
+                            </group>
                         </group>
                         <group name="inf">
                             <group string="Employee">
@@ -197,7 +202,7 @@
                                     </div>
                                     <div class="o_kanban_record_bottom">
                                         <div class="oe_kanban_bottom_left">
-                                            <field name="priority" widget="priority"/>
+                                            <field name="rating" widget="priority"/>
                                             <strong>
                                                 <field name="deadline" widget="remaining_days"/>
                                             </strong>
@@ -239,6 +244,8 @@
             <field name="model">assignment.s</field>
             <field name="arch" type="xml">
                 <search string="Assignment">
+                    <field name="name"/>
+                    <field name="topic"/>
                     <group expand="1" string="group by">
                         <filter string="Status" name="state" context="{'group_by':'state'}"/>
                     </group>
@@ -256,7 +263,7 @@
             <field name="context">{'search_default_state': 1}</field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
-                    Create New Assignment!!!
+                    No assignment existing!!
                 </p>
             </field>
         </record>
