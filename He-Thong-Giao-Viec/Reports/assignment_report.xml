@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assignment_id_report">
+        <t t-call="web.html_container">
+            <div class="header" style="border-bottom: 1px solid black;">
+                <tr>
+                    <td class="text-align: left">
+                        <h3>ASM</h3>
+                    </td>
+                    <td class="text-align: right">
+                        <h3>
+                            <span style="font-size: 14px;"><strong>Create Date</strong>:
+                                <t t-foreach="docs" t-as="header">
+                                    <t t-esc="header.create_date"/>
+                                </t>
+                            </span>
+                        </h3>
+                    </td>
+                </tr>
+            </div>
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <t t-foreach="docs" t-as="title">
+                        <h3 class="text-center">Assigning Report
+                            <span style="font-size: 23pt;FONT-WEIGHT: bold;">
+                                <br/>
+                                <br/>
+                                <span t-field="title.name" style="FONT-SIZE:20pt; FONT-WEIGHT: bold;"/>
+                            </span>
+                        </h3>
+                    </t>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left;">
+                                <strong>Topic</strong>
+                            </th>
+                            <th style="text-align:left;">
+                                <strong>Department</strong>
+                            </th>
+                            <th style="text-align:left;">
+                                <strong>Employee</strong>
+                            </th>
+                            <th style="text-align:left;">
+                                <strong>Deadline</strong>
+                            </th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        <t t-foreach="docs" t-as="i">
+                            <tr>
+                                <td style="text-align:left;">
+                                    <span t-field="i.topic"/>
+                                </td>
+                                <td style="text-align:left;">
+                                    <span t-field="i.department"/>
+                                </td>
+                                <td style="text-align:left;">
+                                    <span t-field="i.employee"/>
+                                </td>
+                                <td style="text-align:left;">
+                                    <span t-field="i.deadline"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+                <tbottom>
+                    <t t-foreach="docs" t-as="note">
+                        <td style="text-align:left">
+                            <span t-field="note.description"/>
+                        </td>
+                    </t>
+                </tbottom>
+
+            </t>
+        </t>
+    </template>
+</odoo>
