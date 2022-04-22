@@ -40,7 +40,13 @@ class Assistance(models.Model):
     type = fields.Char(string='Type', default='2')
     create_subtask = fields.Boolean(string="Subtask?")
     subtask = fields.Many2one('assistance.s', string="Parent")
-    subtask_count = fields.Integer(compute='_compute_subtask_count')
+    subtask_count = fields.Integer(string='Subtask Qty', compute='_compute_subtask_count')
+    rating = fields.Selection([
+        ('no', 'Not Rating'),
+        ('bad', 'Bad'),
+        ('good', 'Good'),
+        ('perfect', 'Perfect')
+    ], default='no')
 
     def name_get(self):
         res = []
@@ -85,7 +91,6 @@ class Assistance(models.Model):
             'topic': self.topic.id,
             'creator': self.creator.id,
             'type': self.type,
-
         }
         self.env['my.assignment'].create(vals)
         self.sudo().write({
@@ -102,14 +107,12 @@ class Assistance(models.Model):
 
     def set_kanban_color(self):
         for record in self:
-            if record.state == 'draft':
+            if record.priority == '0':
                 color = 0
-            elif record.state == 'send':
-                color = 3
-            elif record.state == 'complete':
-                color = 4
-            elif record.state == 'confirm':
-                color = 10
+            elif record.priority == '1':
+                color = 2
+            elif record.priority == '2':
+                color = 1
             else:
                 color = 1
             record.color = color
@@ -139,6 +142,7 @@ class Assistance(models.Model):
             'creator': self.creator.id,
             'create_subtask': self.create_subtask,
             'subtask': self.subtask.id,
+            'rating': self.rating,
 
         }
         for rec in self:
