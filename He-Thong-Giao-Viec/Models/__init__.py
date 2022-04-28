@@ -8,3 +8,5 @@ from . import topic_categories
 from . import assistance
 from . import my_task
 from . import sprint
+from . import dashboard
+from . import rating_final
