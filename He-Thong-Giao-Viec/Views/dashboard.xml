@@ -1,28 +1,22 @@
+<?xml version="1.0"?>
 <odoo>
 
-    <record id="assignment_graph_pie" model="ir.ui.view">
-            <field name="name">Assignment.Graph</field>
-            <field name="model">my.assignment</field>
-            <field name="arch" type="xml">
-                <graph string="Assignment Graph" type="pie" sample="1">
-                    <field name="rating"/>
-                    <field name="color" invisible="1"/>
-                </graph>
-            </field>
-        </record>
-
-    <record id="assignment_graph_bar" model="ir.ui.view">
-            <field name="name">Assignment.Graph</field>
-            <field name="model">my.assignment</field>
-            <field name="arch" type="xml">
-                <graph string="Assignment Graph" type="bar" sample="1">
-                    <field name="state"/>
-                </graph>
-            </field>
-        </record>
+    <record id="employee_rating_view_action" model="ir.actions.act_window">
+        <field name="name">Employee Rating View</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">employee.rating</field>
+        <field name="view_mode">tree</field>
+        <!--        <field name="view_id" ref="He-Thong-Giao-Viec.employee_rating"/>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Record!!!
+            </p>
+        </field>
+    </record>
 
     <record id="my_assignment_board_pie" model="ir.actions.act_window">
         <field name="name">Assignment Pie</field>
+        <field name="type">ir.actions.act_window</field>
         <field name="res_model">my.assignment</field>
         <field name="view_mode">graph</field>
         <field name="view_id" ref="He-Thong-Giao-Viec.assignment_graph_pie"/>
@@ -30,9 +24,18 @@
 
     <record id="my_assignment_board_bar" model="ir.actions.act_window">
         <field name="name">Assignment Bar</field>
+        <field name="type">ir.actions.act_window</field>
         <field name="res_model">my.assignment</field>
         <field name="view_mode">graph</field>
         <field name="view_id" ref="He-Thong-Giao-Viec.assignment_graph_bar"/>
+    </record>
+
+    <record id="my_assignment_graph_line" model="ir.actions.act_window">
+        <field name="name">Assignment Line</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">my.assignment</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="He-Thong-Giao-Viec.assignment_graph_line"/>
     </record>
 
     <record id="dashboard_form_view" model="ir.ui.view">
@@ -44,9 +47,11 @@
                 <board style="1-2">
                     <column>
                         <action string="Rating" name="%(He-Thong-Giao-Viec.my_assignment_board_pie)d"/>
+                        <action string="Rating" name="%(He-Thong-Giao-Viec.employee_rating_view_action)d"/>
                     </column>
                     <column>
-                        <action string="Assignment's Status" name="%(He-Thong-Giao-Viec.my_assignment_board_bar)d"/>
+                        <action string="Assignment Status" name="%(He-Thong-Giao-Viec.my_assignment_board_bar)d"/>
+                        <action string="Completed Assignment" name="%(He-Thong-Giao-Viec.my_assignment_graph_line)d"/>
                     </column>
                 </board>
             </form>
@@ -56,7 +61,8 @@
     <record model="ir.actions.act_window" id="asm_board_board">
         <field name="name">ASM Dashboard</field>
         <field name="res_model">board.board</field>
-        <field name="view_mode">form,graph</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">form,graph,pivot</field>
         <field name="usage">menu</field>
         <field name="view_id" ref="dashboard_form_view"/>
     </record>
