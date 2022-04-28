@@ -10,6 +10,7 @@
                         <button name="action_complete" type="object" string="Complete" class="btn-primary"
                                 states="received"
                                 attrs="{'invisible': [('state','=','confirm')]}" confirm="Complete this form?"/>
+                        <!--                        <button name="rating_employee" type="object" string="test" class="btn-primary"/>-->
                         <field name="state" widget="statusbar" statusbar_visible="received,complete,confirm"/>
                     </header>
                     <sheet>
@@ -119,6 +120,7 @@
         <record id="my_assignment_view_kanban" model="ir.ui.view">
             <field name="name">My Assignment Kanban</field>
             <field name="model">my.assignment</field>
+<!--            <field name="priority">1</field>-->
             <field name="arch" type="xml">
                 <kanban default_group_by="state" group_create="false" quick_create="false"
                         records_draggable="true" create="false">
@@ -235,11 +237,43 @@
             </field>
         </record>
 
+        <!--Chart-->
+        <record id="assignment_graph_line" model="ir.ui.view">
+            <field name="name">Assignment.Graph.Line</field>
+            <field name="model">my.assignment</field>
+            <field name="arch" type="xml">
+                <graph string="Assignment Line" type="line">
+                    <field name="create_date" type="column" interval="day"/>
+                    <field name="count_completed_job" type="row"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="assignment_graph_pie" model="ir.ui.view">
+            <field name="name">Assignment.Graph.Pie</field>
+            <field name="model">my.assignment</field>
+            <field name="arch" type="xml">
+                <graph string="Assignment Graph Pie" type="pie">
+                    <field name="rating"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="assignment_graph_bar" model="ir.ui.view">
+            <field name="name">Assignment.Graph.Bar</field>
+            <field name="model">my.assignment</field>
+            <field name="arch" type="xml">
+                <graph string="Assignment Graph Bar" type="bar">
+                    <field name="state"/>
+                </graph>
+            </field>
+        </record>
+
         <record id="action_my_assignment" model="ir.actions.act_window">
             <field name="name">My Assignment</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">my.assignment</field>
-            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_mode">kanban,tree,form,graph</field>
             <field name="domain">[
                 ('employee.user_id', '=', uid)
                 ]
@@ -256,7 +290,7 @@
             <field name="name">My Assignment</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">my.assignment</field>
-            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_mode">kanban,tree,form,graph</field>
             <field name="domain">[
                 ('employee.user_id', '=', uid)
                 ]
