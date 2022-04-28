@@ -11,3 +11,5 @@ access_assistance_s,access.assistance.s,model_assistance_s,,1,1,1,1
 access_deny_wizard,access.deny.wizard,model_deny_wizard,,1,1,1,1
 access_task_management,access.task.management,model_task_management,,1,1,1,1
 access_sprint_management,access.sprint.management,model_sprint_management,,1,1,1,1
+access_board_board,access.board.board,He-Thong-Giao-Viec.model_board_board,He-Thong-Giao-Viec.group_assignment_employee_manager,1,1,1,1
+access_employee_rating,access.employee.rating,model_employee_rating,,1,1,1,1
