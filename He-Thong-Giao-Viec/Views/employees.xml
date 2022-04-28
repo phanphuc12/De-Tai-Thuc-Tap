@@ -6,6 +6,9 @@
             <field name="model">hr.employee</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
+                <header>
+                    <button name="send_employee" string="Send" type="object" class="btn-primary"/>
+                </header>
                 <xpath expr="//group[@name= 'active_group']/field[@name= 'user_id']" position="replace">
                     <field name="user_id" string="Related User" domain="[('share', '=', False)]"
                            groups='He-Thong-Giao-Viec.group_assignment_employee_manager'/>
@@ -26,7 +29,9 @@
                             <field name="name" placeholder="Employee's Name" required="True"/>
                         </h2>
                     </div>
-
+                </xpath>
+                <xpath expr="//field[@name='work_email']" position="after">
+                    <field name="employee_rate"/>
                 </xpath>
                 <xpath expr="//page[@name = 'hr_settings']" position="after">
                     <page name="Family" string="Family">
@@ -53,16 +58,16 @@
             </field>
         </record>
 
-<!--        <record id="hr_employee_form" model="ir.ui.view">-->
-<!--            <field name="name">hr.employee.form</field>-->
-<!--            <field name="model">hr.employee</field>-->
-<!--            <field name="inherit_id" ref="hr.view_employee_form"/>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <tree attrs="{create="false" groups="He-Thong-Giao-Viecj.group_assignment_employee"}">-->
-<!--                    <field name="name_seq"/>-->
-<!--                </tree>-->
-<!--            </field>-->
-<!--        </record>-->
+        <!--        <record id="hr_employee_form" model="ir.ui.view">-->
+        <!--            <field name="name">hr.employee.form</field>-->
+        <!--            <field name="model">hr.employee</field>-->
+        <!--            <field name="inherit_id" ref="hr.view_employee_form"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <tree attrs="{create="false" groups="He-Thong-Giao-Viecj.group_assignment_employee"}">-->
+        <!--                    <field name="name_seq"/>-->
+        <!--                </tree>-->
+        <!--            </field>-->
+        <!--        </record>-->
 
         <record id="action_employee_tab" model="ir.actions.act_window">
             <field name="name">Employee Tab</field>
