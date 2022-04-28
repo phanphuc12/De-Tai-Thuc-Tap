@@ -19,7 +19,6 @@
                                 <field name="end_date"/>
                             </group>
                         </group>
-
                         <group>
                             <field name="description"/>
                             <field name="creator" invisible="1"/>
