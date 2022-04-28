@@ -92,7 +92,15 @@
                 name="Dashboard"
                 parent="menu_view"
                 action="asm_board_board"
-                sequence="10"/>
+                sequence="10"
+                groups="He-Thong-Giao-Viec.group_assignment_employee_manager"/>
+
+<!--        <menuitem-->
+<!--                id="action_rating"-->
+<!--                name="rating"-->
+<!--                parent="menu_view"-->
+<!--                action="act_rating_view"-->
+<!--                sequence="10"/>-->
 
     </data>
 </odoo>
