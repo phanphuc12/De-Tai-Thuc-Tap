@@ -34,6 +34,7 @@
         'Views/assistance.xml',
         'Views/my_task.xml',
         'Views/sprint.xml',
+        'Views/employee_rating.xml',
         'Views/dashboard.xml',
         # reports
         'Reports/assignment_report.xml',
