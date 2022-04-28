@@ -19,7 +19,6 @@
                                 <field name="type"/>
                             </group>
                         </group>
-
                         <group>
                             <field name="description"/>
                         </group>
@@ -43,6 +42,7 @@
             <field name="model">topic.category</field>
             <field name="arch" type="xml">
                 <search string="Topic Category">
+                    <field name="name"/>
                     <group expand="1" string="group by">
                         <filter string="Type" name="type" context="{'group_by':'type'}"/>
                     </group>
