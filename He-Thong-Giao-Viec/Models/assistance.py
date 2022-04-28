@@ -129,26 +129,25 @@ class Assistance(models.Model):
         return result
 
     def write(self, vals):
-        value = {
-            'description': self.description,
-            'department': self.department.id,
-            'employee': self.employee.id,
-            'deadline': self.deadline,
-            'file': self.file,
-            'file_name': self.file_name,
-            'create_time': self.create_time,
-            'priority': self.priority,
-            'topic': self.topic.id,
-            'creator': self.creator.id,
-            'create_subtask': self.create_subtask,
-            'subtask': self.subtask.id,
-            'rating': self.rating,
-
-        }
+        ch = super(Assistance, self).write(vals)
         for rec in self:
-            pr = self.env['my.assignment'].search([('name', '=', rec.name)]).write(value)
-            ch = super(Assistance, self).write(vals)
-            return pr, ch
+            self.env['my.assignment'].search([('name', '=', rec.name)]).write({
+                'description': rec.description,
+                'department': rec.department.id,
+                'employee': rec.employee.id,
+                'deadline': rec.deadline,
+                'file': rec.file,
+                'file_name': rec.file_name,
+                'create_time': rec.create_time,
+                'priority': rec.priority,
+                'topic': rec.topic.id,
+                'creator': rec.creator.id,
+                'create_subtask': rec.create_subtask,
+                'subtask': rec.subtask.id,
+                'rating': rec.rating,
+
+            })
+        return ch
 
     @api.onchange('department')
     def assistance_only(self):
