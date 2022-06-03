@@ -54,6 +54,11 @@ class MyTask(models.Model):
                 color = 1
             record.color = color
 
+    # @api.onchange('name')
+    # def related_department(self):
+    #     for rec in self:
+    #         return {'domain': {'sprint': [('creator', '=', rec.creator)]}}
+
     @api.model
     def _read_group_selection_field(self, values, domain, order):
         return ['todo', 'doing', 'done']
