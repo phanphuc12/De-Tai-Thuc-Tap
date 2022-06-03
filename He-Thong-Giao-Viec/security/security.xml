@@ -18,7 +18,7 @@
         <field name="implied_ids" eval="[(4, ref('group_assignment_employee'))]"/>
     </record>
 
-    <!--    employee access-->
+    <!--Employee access-->
     <record model="ir.rule" id="cant_see_Employee">
         <field name="name">Cant See Employee</field>
         <field name="model_id" ref="model_hr_employee"/>
@@ -41,6 +41,7 @@
         <field name="perm_read" eval="1"/>
     </record>
 
+    <!--Dashboard-->
     <record model="ir.rule" id="see_dashboard">
         <field name="name">See Dashboard</field>
         <field name="model_id" ref="model_board_board"/>
@@ -51,5 +52,28 @@
         <field name="perm_unlink" eval="1"/>
         <field name="perm_read" eval="1"/>
     </record>
+
+<!--    &lt;!&ndash;Users&ndash;&gt;-->
+<!--    <record model="ir.rule" id="cant_see_Users">-->
+<!--        <field name="name">Cant See Users</field>-->
+<!--        <field name="model_id" ref="model_res_users"/>-->
+<!--        <field name="domain_force">[('name','=',user.id)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('group_assignment_employee'))]"/>-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--        <field name="perm_write" eval="0"/>-->
+<!--        <field name="perm_unlink" eval="0"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
+
+<!--    <record model="ir.rule" id="see_all_users">-->
+<!--        <field name="name">See Users</field>-->
+<!--        <field name="model_id" ref="model_res_users"/>-->
+<!--        <field name="domain_force">[(1, '=', 1)]</field>-->
+<!--        <field name="groups" eval="[(4, ref('group_assignment_employee_manager'))]"/>-->
+<!--        <field name="perm_create" eval="1"/>-->
+<!--        <field name="perm_write" eval="1"/>-->
+<!--        <field name="perm_unlink" eval="1"/>-->
+<!--        <field name="perm_read" eval="1"/>-->
+<!--    </record>-->
 
 </odoo>
