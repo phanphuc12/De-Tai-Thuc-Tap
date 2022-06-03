@@ -39,6 +39,9 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
+                    <field name="project"/>
+                    <field name="department"/>
+                    <field name="name_pm"/>
                 </tree>
             </field>
         </record>
